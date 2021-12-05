@@ -26,8 +26,10 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes):
         os.mkdir(os.path.join(working_dir, token_dir))
 
     if os.path.exists(os.path.join(working_dir, token_dir, pickle_file)):
+        print('1')
         with open(os.path.join(working_dir, token_dir, pickle_file), 'rb') as token:
             cred = pickle.load(token)
+            print('2')
 
     if not cred or not cred.valid:
         if cred and cred.expired and cred.refresh_token:
