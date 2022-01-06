@@ -16,23 +16,29 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes):
     
     cred = None
     working_dir = os.getcwd()
+    semi_dir = 'youtube_api'
     token_dir = 'token files'
 
     pickle_file = f'token_{API_SERVICE_NAME}_{API_VERSION}.pickle'
     # print(pickle_file)
-    
-    ### Check if token dir exists first, if not, create the folder
+    print('..')
+    ### Check if token dir exists first, if not, create the folder 
     if not os.path.exists(os.path.join(working_dir, token_dir)):
         os.mkdir(os.path.join(working_dir, token_dir))
-
-    if os.path.exists(os.path.join(working_dir, token_dir, pickle_file)):
+        print('0')
+        
+    print(working_dir, token_dir, pickle_file)
+          
+    if os.path.exists('token files/token_youtube_v3.pickle'):
         print('1')
         with open(os.path.join(working_dir, token_dir, pickle_file), 'rb') as token:
             cred = pickle.load(token)
             print('2')
 
     if not cred or not cred.valid:
+        print('aaa')
         if cred and cred.expired and cred.refresh_token:
+            print('bbb')
             cred.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, SCOPES)
@@ -42,6 +48,7 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes):
             pickle.dump(cred, token)
 
     try:
+        print('1111')
         service = build(API_SERVICE_NAME, API_VERSION, credentials=cred)
         print(API_SERVICE_NAME, 'service created successfully')
         return service
