@@ -33,7 +33,7 @@ def collect_data(q,order=None,publishedAfter=None):
 		id=video_list
 	).execute()
 
-	pprint(video_response)
+	# pprint(video_response)
 	return video_response
 
 # collect_data('제주 vlog')
