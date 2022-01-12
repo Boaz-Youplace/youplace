@@ -9,12 +9,13 @@ from kafka import TopicPartition
 import json
 import time
 
-class KafkaConsumerExample:
+class KafkaConsumer_:
     def __init__(self):
         self.host = 'localhost:9092'
-        self.topic_name = 'boazyoutube_2'
+        self.topic_name = ''
+        self.group_id = ''
         self.consumer = KafkaConsumer(bootstrap_servers=[self.host],
-                                      group_id='my-group3',
+                                      group_id=self.group_id,
                                       auto_offset_reset='latest',
                                       enable_auto_commit=True, # 얘가 있으면 commit을 안해도 되는 거 아닌가?
                                       value_deserializer=lambda x: x.decode('utf-8'),
@@ -22,6 +23,25 @@ class KafkaConsumerExample:
                                       )
         self.consumer.subscribe([self.topic_name])
         self.partitions = set()
+        
+    def set_group_id(self,group_id):
+        self.group_id=group_id
+    
+    def get_group_id(self):
+        return self.group_id
+        
+        
+    def set_host(self,host):
+        self.host = host
+        
+    def get_host(self):
+        return self.host
+    
+    def set_topic_name(self,topic_name):
+        self.topic_name = topic_name
+    
+    def get_topic_name(self):
+        return self.topic_name
 
     def _comsume(self):
       try: 
@@ -52,5 +72,5 @@ class KafkaConsumerExample:
 
 
 if __name__ == '__main__':
-    kafka = KafkaConsumerExample()
+    kafka = KafkaConsumer_()
     kafka._comsume()

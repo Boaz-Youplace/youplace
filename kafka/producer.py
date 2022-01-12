@@ -2,7 +2,7 @@ from kafka import KafkaProducer
 from json import dumps
 import time
 
-topic_name="test_1" # 지금은 임의 설정 
+topic_name="boaz_youtube_2" # 지금은 임의 설정 
 producer = KafkaProducer(
     acks=0,
     compression_type='gzip',
