@@ -53,11 +53,8 @@ class KafkaConsumer_:
         consumer.subscribe([self.topic_name])
         print ('offset before =',self.consumer.committed(TopicPartition(self.topic_name, 0)))
         # 시간 측정
-        print("?")
         start=time.time()
-        print("?")
-        msg_pack = self.consumer.poll(timeout_ms=500) # 왜 안될까?
-        print("?")
+        msg_pack = self.consumer.poll(timeout_ms=500)
         # print(msg_pack)
         for tp, messages in msg_pack.items():
             for message in messages:
@@ -77,18 +74,12 @@ class KafkaConsumer_:
           # 아직 안만듬
 
 
-# if __name__ == '__main__':
-    # basic_cg = KafkaConsumer_()
-    # basic_cg.set_group_id('2201012')
-    # basic_cg.set_topic_name('boaz_youtube_2')
-    # basic_cg._consume()
-    # kafka = KafkaConsumer_()
-    # kafka._consume()
-    
-    # basic_cg = KafkaConsumer_()
-    # basic_cg.set_group_id('220112')
-    # basic_cg.set_topic_name('boaz_youtube_2')
-    # basic_cg.set_consumer()
-    # basic_cg._consume()
+if __name__ == '__main__':
+    #consumer group 2개로 나누기. basic과 stat(통계)
+    basic_cg = KafkaConsumer_()
+    basic_cg.set_group_id('220112')
+    basic_cg.set_topic_name('boaz_youtube_2')
+    basic_cg.set_consumer()
+    basic_cg._consume()
     
     # 실행은 consumer_group.py에서!
