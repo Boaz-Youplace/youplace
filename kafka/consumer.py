@@ -44,6 +44,10 @@ class KafkaConsumer_:
     def get_topic_name(self):
         return self.topic_name
 
+    def get_partitions(self):
+        partitions=self.consumer.partitions_for_topic(self.topic_name)
+        return partitions
+    
     def _consume(self):
       try: 
         # offset before,after partition별로 다 출력 찍기
@@ -51,7 +55,11 @@ class KafkaConsumer_:
         # 태빈님이 공유해주신 주키퍼 없는 카프카 도커 나중에 써봐도 좋을듯?
         consumer=self.consumer
         consumer.subscribe([self.topic_name])
-        print ('offset before =',self.consumer.committed(TopicPartition(self.topic_name, 0)))
+        
+        partitions = self.get_partitions()
+        
+        for p_id in partitions:
+            print ('offset before =',self.consumer.committed(TopicPartition(self.topic_name, p_id)))
         # 시간 측정
         start=time.time()
         msg_pack = self.consumer.poll(timeout_ms=500)
@@ -65,12 +73,14 @@ class KafkaConsumer_:
                                                     message.value))
         
         self.consumer.commit()  # 컨슈밍이 완료되면 오프셋을 커밋한다.
-        print ('offset after =', self.consumer.committed(TopicPartition(self.topic_name, 0)))
+        for p_id in partitions:
+            print ('offset after =', self.consumer.committed(TopicPartition(self.topic_name, p_id)))
+            
         print('커밋완료!')
         print("걸린시간 :",time.time()-start)
       except:
           pass
-          # self.rollback()  # 만약 에러가 생겼을때에는 롤백을 구현해준다.
+          # self.rollback()  # 만약 에러가 생겼을때에는 롤백을 구현한다.
           # 아직 안만듬
 
 
