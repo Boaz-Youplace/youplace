@@ -1,9 +1,8 @@
-# 실제 실행시키는 파일 & 데이터 전처리
-
 from pprint import pprint
 from collecting_data import collect_data
 import pandas as pd
 import re
+import time
 
 q='Jeju vlog'
 order='rating'
@@ -12,6 +11,8 @@ max_result=5
 data = collect_data(q,order)
 
 def data_processing_(data):
+    start=time.time()
+    
     id = []
     title = []
     description = []
@@ -280,8 +281,10 @@ def data_processing_(data):
     x = list({i['place_name'][0]:i for i in real}.values())
     print("최종 데이터!!!!!")
     pprint(x)
+    print("걸린시간 :",time.time()-start)
     return x
 
     # print(len(x))
 
-data_processing_(data)
+if __name__ =='__main__':
+    data_processing_(data)

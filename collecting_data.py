@@ -1,5 +1,3 @@
-import os
-from pprint import pprint
 from google_apis import create_service
         
 def collect_data(q,order=None,publishedAfter=None,publishedBefore=None,max_result=5):
