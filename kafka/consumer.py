@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 # 토픽별 컨슈머 그룹도 다 다르니까 클래스로 관리하는 게 편할 거임
 
-from types import TracebackType
 from kafka import KafkaConsumer
 from kafka import TopicPartition
 
-import json
+
 import time
 
 class KafkaConsumer_:
