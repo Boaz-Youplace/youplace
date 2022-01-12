@@ -2,14 +2,14 @@ import os
 from pprint import pprint
 from google_apis import create_service
         
-def collect_data(q,order=None,publishedAfter=None,publishedBefore=None):
+def collect_data(q,order=None,publishedAfter=None,publishedBefore=None,max_result=5):
 	CLIENT_SECRET_FILE = 'koeunseo-client-secret.json' # Oauth2 사용자 인증 정보 json파일 가져오기
 	API_NAME = 'youtube'
 	API_VERSION = 'v3'
 	SCOPES = ['https://www.googleapis.com/auth/youtube']
 	service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES) 
 
-	max_result = 5
+	max_result = max_result
 	search_response = service.search().list(
 		part = 'snippet',
 		q = q,

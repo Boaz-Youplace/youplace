@@ -50,8 +50,7 @@ class KafkaConsumer_:
     
     def _consume(self):
       try: 
-        # offset before,after partition별로 다 출력 찍기
-        # broker가 더 있었다면 refactor도 있어야 했을것임...
+        # broker가 더 있었다면 refactor도 있어야 했을것임
         # 태빈님이 공유해주신 주키퍼 없는 카프카 도커 나중에 써봐도 좋을듯?
         consumer=self.consumer
         consumer.subscribe([self.topic_name])
