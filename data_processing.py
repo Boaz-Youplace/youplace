@@ -3,8 +3,11 @@
 from pprint import pprint
 from collecting_data import collect_data
 
+# 인자 형식은 모두 string입니당 !
 q='제주 vlog'
 order='date'
+publishedBefore=''
+publishedAfter=''
 
 dataset = collect_data(q,order)
 pprint(collect_data(q,order))

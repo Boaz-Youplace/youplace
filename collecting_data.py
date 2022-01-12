@@ -2,7 +2,7 @@ import os
 from pprint import pprint
 from google_apis import create_service
         
-def collect_data(q,order=None,publishedAfter=None):
+def collect_data(q,order=None,publishedAfter=None,publishedBefore=None):
 	CLIENT_SECRET_FILE = 'koeunseo-client-secret.json' # Oauth2 사용자 인증 정보 json파일 가져오기
 	API_NAME = 'youtube'
 	API_VERSION = 'v3'
@@ -15,6 +15,7 @@ def collect_data(q,order=None,publishedAfter=None):
 		q = q,
 		order = order,
 		publishedAfter = publishedAfter,
+  		publishedBefore = publishedBefore,
 		maxResults = max_result
 	).execute()
 
