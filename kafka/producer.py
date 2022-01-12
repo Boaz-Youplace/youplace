@@ -22,6 +22,7 @@ print("메시지 전송 시작")
 for i in range(100):
     data = {'str':'result'+str(i)}
     print("메시지 전송중..."+data['str'])
+    # producer에서 offset이 뭔지는 알 수 없낭?
     producer.send(topic_name, value=data)
     # 보내는 방식이 총 3가지 https://data-engineer-tech.tistory.com/14?category=847456 (비동기 send)
     producer.flush()

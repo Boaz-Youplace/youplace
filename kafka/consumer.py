@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# 아주 잘된다네 ! 
 # 토픽별 컨슈머 그룹도 다 다르니까 클래스로 관리하는 게 편할 거임
 
 from types import TracebackType
@@ -14,6 +13,11 @@ class KafkaConsumer_:
         self.host = 'localhost:9092'
         self.topic_name = ''
         self.group_id = ''
+        self.consumer = KafkaConsumer()
+        # self.consumer.subscribe([self.topic_name])
+        self.partitions = set()
+        
+    def set_consumer(self):
         self.consumer = KafkaConsumer(bootstrap_servers=[self.host],
                                       group_id=self.group_id,
                                       auto_offset_reset='latest',
@@ -21,15 +25,12 @@ class KafkaConsumer_:
                                       value_deserializer=lambda x: x.decode('utf-8'),
                                       consumer_timeout_ms=1000,
                                       )
-        self.consumer.subscribe([self.topic_name])
-        self.partitions = set()
         
     def set_group_id(self,group_id):
         self.group_id=group_id
     
     def get_group_id(self):
         return self.group_id
-        
         
     def set_host(self,host):
         self.host = host
@@ -43,16 +44,21 @@ class KafkaConsumer_:
     def get_topic_name(self):
         return self.topic_name
 
-    def _comsume(self):
+    def _consume(self):
       try: 
         # offset before,after partition별로 다 출력 찍기
         # broker가 더 있었다면 refactor도 있어야 했을것임...
         # 태빈님이 공유해주신 주키퍼 없는 카프카 도커 나중에 써봐도 좋을듯?
-        
+        consumer=self.consumer
+        consumer.subscribe([self.topic_name])
         print ('offset before =',self.consumer.committed(TopicPartition(self.topic_name, 0)))
         # 시간 측정
+        print("?")
         start=time.time()
-        msg_pack = self.consumer.poll(timeout_ms=500)
+        print("?")
+        msg_pack = self.consumer.poll(timeout_ms=500) # 왜 안될까?
+        print("?")
+        # print(msg_pack)
         for tp, messages in msg_pack.items():
             for message in messages:
                 # message value and key are raw bytes -- decode if necessary!
@@ -71,6 +77,18 @@ class KafkaConsumer_:
           # 아직 안만듬
 
 
-if __name__ == '__main__':
-    kafka = KafkaConsumer_()
-    kafka._comsume()
+# if __name__ == '__main__':
+    # basic_cg = KafkaConsumer_()
+    # basic_cg.set_group_id('2201012')
+    # basic_cg.set_topic_name('boaz_youtube_2')
+    # basic_cg._consume()
+    # kafka = KafkaConsumer_()
+    # kafka._consume()
+    
+    # basic_cg = KafkaConsumer_()
+    # basic_cg.set_group_id('220112')
+    # basic_cg.set_topic_name('boaz_youtube_2')
+    # basic_cg.set_consumer()
+    # basic_cg._consume()
+    
+    # 실행은 consumer_group.py에서!
