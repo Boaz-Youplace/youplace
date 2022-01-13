@@ -273,16 +273,22 @@ def data_processing_(data):
 
     # 중복 제거!!!
     x = list({i['place_name'][0]:i for i in real}.values())
-    print("최종 데이터!!!!!")
-    pprint(x)
+    print("최종 데이터")
+    # pprint(x)
     print("걸린시간 :",time.time()-start)
+    
+    # 뽑은 명소 개수 알고 싶을 때
+    print('record 개수',len(x),type(x))
     return x
 
-    # print(len(x))
+    
 
 # if __name__ =='__main__':
 #     q='Jeju vlog'
 #     order='rating'
 #     max_result=5
-#     data = collect_data(q,order)
-#     data_processing_(data)
+#     publishedAfter = None
+#     publishedBefore = None
+#     dataset = collect_data(q,order)
+#     records = data_processing_(dataset)
+#     pprint(records)
