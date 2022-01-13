@@ -9,6 +9,8 @@ from pprint import pprint
 from kafka import KafkaProducer
 from json import dumps
 import time
+import json
+from bson import json_util
 from data_processing import data_processing_
 from collecting_data import collect_data
 
@@ -29,7 +31,7 @@ class KafkaProducer_:
         self.producer = KafkaProducer(
             acks=0,
             compression_type='gzip',
-            bootstrap_servers=['localhost:9092'],
+            bootstrap_servers=[self.host],
             value_serializer=lambda x: dumps(x).encode('utf-8')
         )
     
@@ -44,7 +46,7 @@ class KafkaProducer_:
         for record in records:
             print("[",self.topic_name,"]에 메시지 전송중....")
             print(type(record))
-            self.producer.send(self.topic_name,value=record)
+            self.producer.send(self.topic_name,json.dumps(record,default=json_util.default).encode('utf-8'))
             # 보내는 방식이 총 3가지 https://data-engineer-tech.tistory.com/14?category=847456 (비동기 send)
             self.producer.flush()
         print("걸린시간 :",time.time()-start)
@@ -69,7 +71,8 @@ if __name__ == '__main__':
     pprint(records)
 
     print("----------------------------")
-    #producer에 records 넣기
+    #2) producer객체 topic개수만큼 생성 - 아직 안함
+    #3) producer에 records 넣기
     test_producer = KafkaProducer_()
     test_producer.set_topic_name('test0113')
     test_producer._produce(records)

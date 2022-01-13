@@ -88,8 +88,8 @@ if __name__ == '__main__':
     #consumer group 2개로 나누기. basic과 stat(통계)
     #basic_(제주 명소) : 총 6개
     basic_cg = KafkaConsumer_()
-    basic_cg.set_group_id('220112')
-    basic_cg.set_topic_name('boaz_youtube_2')
+    basic_cg.set_group_id('con0113')
+    basic_cg.set_topic_name('test0113')
     basic_cg.set_consumer()
     basic_cg._consume()
     
