@@ -4,12 +4,6 @@ import pandas as pd
 import re
 import time
 
-q='Jeju vlog'
-order='rating'
-max_result=5
-
-data = collect_data(q,order)
-
 def data_processing_(data):
     start=time.time()
     
@@ -286,5 +280,9 @@ def data_processing_(data):
 
     # print(len(x))
 
-if __name__ =='__main__':
-    data_processing_(data)
+# if __name__ =='__main__':
+#     q='Jeju vlog'
+#     order='rating'
+#     max_result=5
+#     data = collect_data(q,order)
+#     data_processing_(data)

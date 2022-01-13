@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-# 토픽별 컨슈머 그룹도 다 다르니까 클래스로 관리하는 게 편할 거임
-
+'''
+기능
+1) 토픽별로 KafkaConsumer_ 객체(Consumer Group) 생성
+'''
 from kafka import KafkaConsumer
 from kafka import TopicPartition
 
@@ -84,6 +86,7 @@ class KafkaConsumer_:
 
 if __name__ == '__main__':
     #consumer group 2개로 나누기. basic과 stat(통계)
+    #basic_(제주 명소) : 총 6개
     basic_cg = KafkaConsumer_()
     basic_cg.set_group_id('220112')
     basic_cg.set_topic_name('boaz_youtube_2')
