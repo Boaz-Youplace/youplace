@@ -75,8 +75,7 @@ class KafkaConsumer_:
         # record 뽑아오기(일회성)
         msg_pack = self.consumer.poll(timeout_ms=500)
         
-        # 컨슈밍이 완료되면 오프셋 커밋 -> 아래 코드는 consumer_multi_processing함수에서 진행
-        # 5초간격으로(default) 자동 커밋 옵션 넣었기 때문에 딱히 필요없음
+        # 컨슈밍이 완료되면 오프셋 수동 커밋 (커밋 옵션이 5초 주기이기 때문에 일회성으로 뽑으면 자동 커밋 안됨 )
         self.consumer.commit()  
         print('커밋완료!')
 
