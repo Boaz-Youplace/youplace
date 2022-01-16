@@ -87,6 +87,7 @@ class KafkaConsumer_:
             # 파티션0 offset num 차이 비교
             if self.compare_offset_diffrence(p0_offset_before,p0_offset_after) :
                 # json 파일 만들기
+                print('무야호')
                 pass
 
 
@@ -102,6 +103,9 @@ class KafkaConsumer_:
                     tmp = json.loads(message.value)
                     print(tmp)
                     print(tmp['place_name'])
+
+            # 5초 주기로 new record 확인 
+            time.sleep(5)
         
 
 
