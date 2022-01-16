@@ -54,9 +54,15 @@ class KafkaConsumer_:
         partitions=self.consumer.partitions_for_topic(self.topic_name)
         return partitions
     
+    # 파티션0 기준으로 offset 차이가 100이상 나는지 확인
+    def compare_offset_diffrence(self,os_before,os_now):
+        if os_now-os_before >50 :
+            return True
+        return False
+
     def _consume(self):
         partitions = self.get_partitions()
-        
+
         # 파티션 별 last offset 읽기
         for p_id in partitions:
             print ('offset %d before = %d' %(p_id,self.consumer.committed(TopicPartition(self.topic_name, p_id))))
@@ -67,8 +73,23 @@ class KafkaConsumer_:
 
         # 한번 연결하고 계속 데이터를 가지고 올 것이기 때문에 무한루프로 실행
         while True :
-            # record 뽑아오기
+            # 파티션0 현재 offset num 저장
+            p0_offset_before = self.consumer.committed(TopicPartition(self.topic_name,0))
+            print(p0_offset_before)
+
+            # last offset 기준으로 record 컨슘하기 - poll()
             msg_pack = self.consumer.poll(timeout_ms=500)
+
+            # 파티션0 현재 offset num 저장
+            p0_offset_after = self.consumer.committed(TopicPartition(self.topic_name,0))
+            print(p0_offset_after)
+
+            # 파티션0 offset num 차이 비교
+            if self.compare_offset_diffrence(p0_offset_before,p0_offset_after) :
+                # json 파일 만들기
+                pass
+
+
             for tp, messages in msg_pack.items():
                 for message in messages:
                     # message value and key are raw bytes -- decode if necessary!
@@ -76,23 +97,12 @@ class KafkaConsumer_:
                     pprint ("%s:%d:%d: key=%s value=%s" % (tp.topic, tp.partition,
                                                         message.offset, message.key,
                                                         message.value))
-                    print(message.value)
                     print(type(message.value))
+                    # str ->json 변환 
                     tmp = json.loads(message.value)
                     print(tmp)
                     print(tmp['place_name'])
         
-        # 컨슈밍이 완료되면 오프셋 커밋 -> 아래 코드는 consumer_multi_processing함수에서 진행
-        # 5초간격으로(default) 자동 커밋 옵션 넣었기 때문에 딱히 필요없음
-        # self.consumer.commit()  
-        # print('커밋완료!')
-
-        # # 시간 측정 완료
-        # for p_id in partitions:
-        #     print ('offset %d after = %d' %(p_id,self.consumer.committed(TopicPartition(self.topic_name,p_id))))
-            
-        
-        # print("걸린시간 :",time.time()-start)
 
 
 if __name__ == '__main__':
