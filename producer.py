@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding:utf-8 -*-
 '''
 기능
 1) 전처리 파일(data_processing.py) 실행 및 new records 획득
@@ -8,9 +8,10 @@
 from pprint import pprint
 from kafka import KafkaProducer
 from json import dumps
+import yaml
 import time
 import json
-from bson import json_util
+# from bson import json_util
 from data_processing import data_processing_
 from collecting_data import collect_data
 
@@ -46,7 +47,11 @@ class KafkaProducer_:
         for record in records:
             print("[",self.topic_name,"]에 메시지 전송중....")
             print(type(record))
-            self.producer.send(self.topic_name,json.dumps(record,default=json_util.default).encode('utf-8'))
+            # d = yaml.safe_load(record)
+            # print(d)
+            # self.producer.send(self.topic_name,record)
+            self.producer.send(self.topic_name, record)
+            print(record)
             # 보내는 방식이 총 3가지 https://data-engineer-tech.tistory.com/14?category=847456 (비동기 send)
             self.producer.flush()
         print("걸린시간 :",time.time()-start)
@@ -74,6 +79,7 @@ if __name__ == '__main__':
     #2) producer객체 topic개수만큼 생성 - 아직 안함
     #3) producer에 records 넣기
     test_producer = KafkaProducer_()
+    test_producer.set_producer()
     test_producer.set_topic_name('test0113')
     test_producer._produce(records)
     
