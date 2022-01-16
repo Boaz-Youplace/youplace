@@ -64,11 +64,10 @@ class KafkaConsumer_:
         # 시간 측정
         start=time.time()
 
-        # record 뽑아오기
-        # msg_pack = self.consumer.poll(timeout_ms=500)
 
         # 한번 연결하고 계속 데이터를 가지고 올 것이기 때문에 무한루프로 실행
         while True :
+            # record 뽑아오기
             msg_pack = self.consumer.poll(timeout_ms=500)
             for tp, messages in msg_pack.items():
                 for message in messages:
@@ -84,6 +83,7 @@ class KafkaConsumer_:
                     print(tmp['place_name'])
         
         # 컨슈밍이 완료되면 오프셋 커밋 -> 아래 코드는 consumer_multi_processing함수에서 진행
+        # 5초간격으로(default) 자동 커밋 옵션 넣었기 때문에 딱히 필요없음
         # self.consumer.commit()  
         # print('커밋완료!')
 
