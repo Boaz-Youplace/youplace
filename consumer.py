@@ -14,17 +14,15 @@ from collections import OrderedDict
 import time
 
 def create_json_file(msg_pack):
-    # for tp, messages in msg_pack.items():
-    #             for message in messages:
-    #                 pprint ("%s:%d:%d: key=%s value=%s" % (tp.topic, tp.partition,
-    #                                                     message.offset, message.key,
-    #                                                     message.value))
-    #                 print(type(message.value))
-    #                 # str ->json 변환 
-    #                 tmp = json.loads(message.value)
-    #                 print(tmp)
-    #                 print(tmp['place_name'])
-    pass
+    print(2)
+    # 각 파티션 이전 offset num으로 저장하기
+    with open('./json_files/test.json','w',encoding='utf-8') as f:
+        for tp, messages in msg_pack.items():
+            for message in messages:
+                data = json.loads(message.value)
+                print(data)
+                json.dump(data,f)
+    
 
 
 class KafkaConsumer_:
@@ -39,7 +37,7 @@ class KafkaConsumer_:
         self.consumer = KafkaConsumer( 
             self.topic_name,
             bootstrap_servers=[self.host],
-            gśoup_id=self.group_id,
+            group_id=self.group_id,
             auto_offset_reset='latest',
             enable_auto_commit=True, 
             value_deserializer=lambda x: x.decode('utf-8'),
@@ -87,14 +85,19 @@ class KafkaConsumer_:
         while True :
             # last offset 기준으로 record 컨슘하기 - poll()
             msg_pack = self.consumer.poll(timeout_ms=500)
-
+            self.consumer.commit()  
             # 파티션0 현재 offset num 저장
             p0_offset_after = self.consumer.committed(TopicPartition(self.topic_name,0))
-            print(p0_offset_after)
+            print(p0_offset_after,1)
 
-            if p0_offset_after-p0_offset_before > 50 :
+            # if p0_offset_after-p0_offset_before > 50 :ㄴ
+            if p0_offset_after!=p0_offset_before :
                 p0_offset_before=p0_offset_after
-                create_json_file(msg_pack)
+                with open('test.json','w',encoding='utf-8') as f:
+                    for tp, messages in msg_pack.items():
+                        for message in messages:
+                            data = json.loads(message.value)
+                            json.dump(data,f)
 
             for tp, messages in msg_pack.items():
                 for message in messages:
@@ -109,7 +112,7 @@ class KafkaConsumer_:
 
             # 5초 주기로 new record 확인 
             time.sleep(5)
-        
+            
 
 
 if __name__ == '__main__':

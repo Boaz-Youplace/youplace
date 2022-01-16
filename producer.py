@@ -52,7 +52,6 @@ class KafkaProducer_:
             # print(d)
             # self.producer.send(self.topic_name,record)
             self.producer.send(self.topic_name, record)
-            print(record)
             # 보내는 방식이 총 3가지 https://data-engineer-tech.tistory.com/14?category=847456 (비동기 send)
             self.producer.flush()
         print("걸린시간 :",time.time()-start)
@@ -74,9 +73,6 @@ if __name__ == '__main__':
     publishedBefore = None
     dataset = collect_data(q,order)
     records = data_processing_(dataset)
-    pprint(records)
-
-    print("----------------------------")
     #2) producer객체 topic개수만큼 생성 - 아직 안함
     #3) producer에 records 넣기
     test_producer = KafkaProducer_()

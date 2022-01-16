@@ -12,7 +12,7 @@ spark = SparkSession\
 # sparkContext로 객체 생성
 sc = spark.sparkContext
 
-path = './json_files/cars.json'
+path = './json_files/test.json'
 peopledf = spark.read.json(path)
 
 peopledf.printSchema()
