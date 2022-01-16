@@ -5,6 +5,8 @@ pyspark.__version__
 
 from pyspark import SparkConf, SparkContext
 
+# 1. sparkContext라는 객체선언 (엔트리포인트)
+
 sc=SparkContext(master='local',appName='pySpark Basic')
 print(sc)
 
