@@ -78,5 +78,6 @@ if __name__ == '__main__':
     test_producer = KafkaProducer_()
     test_producer.set_producer()
     test_producer.set_topic_name('test0113')
-    test_producer._produce(records)
+    test_producer._produce(records[0])
+    print(records[1]) #한번에 들어오는 레코드 개수 
     

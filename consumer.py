@@ -16,11 +16,15 @@ import time
 def create_json_file(msg_pack):
     print(2)
     # 각 파티션 이전 offset num으로 저장하기
-    with open('./json_files/test.json','w',encoding='utf-8') as f:
+    with open('json_files/test.json','w') as f:
         for tp, messages in msg_pack.items():
             for message in messages:
-                data = json.loads(message.value)
-                print(data)
+                data = json.loads(message.value,encoding='cp949')
+                print(type(message.value))
+                # str ->json 변환 
+                # tmp = json.loads(message.value)
+                # data['place_name']=tmp['place_name']
+                # print(data)
                 json.dump(data,f)
     
 
@@ -77,6 +81,7 @@ class KafkaConsumer_:
 
         # 파티션0 현재 offset num 저장
             p0_offset_before= self.consumer.committed(TopicPartition(self.topic_name,0))
+            print(p0_offset_before,1)
 
         # 시간 측정
         start=time.time()
@@ -88,10 +93,9 @@ class KafkaConsumer_:
             self.consumer.commit()  
             # 파티션0 현재 offset num 저장
             p0_offset_after = self.consumer.committed(TopicPartition(self.topic_name,0))
-            print(p0_offset_after,1)
+            print(p0_offset_after,2)
 
-            # if p0_offset_after-p0_offset_before > 50 :ㄴ
-            if p0_offset_after!=p0_offset_before :
+            if p0_offset_after-p0_offset_before>40 :
                 p0_offset_before=p0_offset_after
                 with open('test.json','w',encoding='utf-8') as f:
                     for tp, messages in msg_pack.items():
@@ -101,14 +105,13 @@ class KafkaConsumer_:
 
             for tp, messages in msg_pack.items():
                 for message in messages:
-                    pprint ("%s:%d:%d: key=%s value=%s" % (tp.topic, tp.partition,
-                                                        message.offset, message.key,
-                                                        message.value))
-                    print(type(message.value))
-                    # str ->json 변환 
-                    tmp = json.loads(message.value)
-                    print(tmp)
-                    print(tmp['place_name'])
+                    # pprint ("%s:%d:%d: key=%s value=%s" % (tp.topic, tp.partition,
+                    #                                     message.offset, message.key,
+                    #                                     message.value))
+                    # print(type(message.value))
+                    # # str ->json 변환 
+                    # tmp = json.loads(message.value)
+                    print(json.loads(message.value)['place_name'])
 
             # 5초 주기로 new record 확인 
             time.sleep(5)

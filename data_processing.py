@@ -519,7 +519,7 @@ def data_processing_(data):
   x = list({i['place_name'][0]:i for i in real}.values())
   print("최종 데이터!!!!!")
   pprint(x)
-  return x
+  return x,len(x)
 
   # print(len(x))
 
