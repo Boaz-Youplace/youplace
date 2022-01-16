@@ -3,12 +3,13 @@
 기능
 1) 토픽별로 KafkaConsumer_ 객체(Consumer Group) 생성
 '''
+from encodings import utf_8
 from ensurepip import bootstrap
 from select import KQ_FILTER_AIO
 from kafka import KafkaConsumer
 from kafka import TopicPartition
 from pprint import pprint
-
+import json
 
 import time
 
@@ -64,26 +65,34 @@ class KafkaConsumer_:
         start=time.time()
 
         # record 뽑아오기
-        msg_pack = self.consumer.poll(timeout_ms=500)
+        # msg_pack = self.consumer.poll(timeout_ms=500)
 
-        for tp, messages in msg_pack.items():
-            for message in messages:
-                # message value and key are raw bytes -- decode if necessary!
-                # e.g., for unicode: `message.value.decode('utf-8')`
-                pprint ("%s:%d:%d: key=%s value=%s" % (tp.topic, tp.partition,
-                                                    message.offset, message.key,
-                                                    message.value))
+        # 한번 연결하고 계속 데이터를 가지고 올 것이기 때문에 무한루프로 실행
+        while True :
+            msg_pack = self.consumer.poll(timeout_ms=500)
+            for tp, messages in msg_pack.items():
+                for message in messages:
+                    # message value and key are raw bytes -- decode if necessary!
+                    # e.g., for unicode: `message.value.decode('utf-8')`
+                    pprint ("%s:%d:%d: key=%s value=%s" % (tp.topic, tp.partition,
+                                                        message.offset, message.key,
+                                                        message.value))
+                    print(message.value)
+                    print(type(message.value))
+                    tmp = json.loads(message.value)
+                    print(tmp)
+                    print(tmp['place_name'])
         
-        # 컨슈밍이 완료되면 오프셋 커밋
-        self.consumer.commit()  
-        print('커밋완료!')
+        # 컨슈밍이 완료되면 오프셋 커밋 -> 아래 코드는 consumer_multi_processing함수에서 진행
+        # self.consumer.commit()  
+        # print('커밋완료!')
 
-        # 시간 측정 완료
-        for p_id in partitions:
-            print ('offset %d after = %d' %(p_id,self.consumer.committed(TopicPartition(self.topic_name,p_id))))
+        # # 시간 측정 완료
+        # for p_id in partitions:
+        #     print ('offset %d after = %d' %(p_id,self.consumer.committed(TopicPartition(self.topic_name,p_id))))
             
         
-        print("걸린시간 :",time.time()-start)
+        # print("걸린시간 :",time.time()-start)
 
 
 if __name__ == '__main__':
