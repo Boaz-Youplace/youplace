@@ -42,6 +42,7 @@ class KafkaProducer_:
 
     # send records
     def _produce(self,records):
+        # 시간 측정
         print("메시지 전송 시작")
         start = time.time()
         for record in records:
