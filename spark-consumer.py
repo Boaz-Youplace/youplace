@@ -1,0 +1,2 @@
+import pyspark
+pyspark.__version__
