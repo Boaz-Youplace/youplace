@@ -48,9 +48,6 @@ class KafkaProducer_:
         for record in records:
             print("[",self.topic_name,"]에 메시지 전송중....")
             print(type(record))
-            # d = yaml.safe_load(record)
-            # print(d)
-            # self.producer.send(self.topic_name,record)
             self.producer.send(self.topic_name, record)
             # 보내는 방식이 총 3가지 https://data-engineer-tech.tistory.com/14?category=847456 (비동기 send)
             self.producer.flush()

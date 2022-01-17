@@ -12,21 +12,7 @@ from pprint import pprint
 import json
 from collections import OrderedDict
 import time
-
-def create_json_file(msg_pack):
-    print(2)
-    # 각 파티션 이전 offset num으로 저장하기
-    with open('json_files/test.json','w') as f:
-        for tp, messages in msg_pack.items():
-            for message in messages:
-                data = json.loads(message.value,encoding='cp949')
-                print(type(message.value))
-                # str ->json 변환 
-                # tmp = json.loads(message.value)
-                # data['place_name']=tmp['place_name']
-                # print(data)
-                json.dump(data,f)
-    
+from ast import literal_eval
 
 
 class KafkaConsumer_:
@@ -95,25 +81,27 @@ class KafkaConsumer_:
             p0_offset_after = self.consumer.committed(TopicPartition(self.topic_name,0))
             print(p0_offset_after,2)
 
-            if p0_offset_after-p0_offset_before>40 :
-                p0_offset_before=p0_offset_after
-                with open('test.json','w',encoding='utf-8') as f:
+            
+            if p0_offset_after - p0_offset_before > 25 :
+                with open('./json_files/test.json','w',encoding='utf-8') as f:
+                    p0_offset_before=p0_offset_after
                     for tp, messages in msg_pack.items():
                         for message in messages:
-                            data = json.loads(message.value)
-                            json.dump(data,f)
+                            data=literal_eval(message.value)
+                            print(data)
+                            print(type(data)) # dict 형태 
+                            json.dump(data,f,ensure_ascii=False)
+                            
+                # for tp, messages in msg_pack.items():
+                #     for message in messages:
+                #         # pprint ("%s:%d:%d: key=%s value=%s" % (tp.topic, tp.partition,
+                #         #                                     message.offset, message.key,
+                #         #                                     message.value))
+                #         # # str ->json 변환 
+                #         # tmp = json.loads(message.value)
+                #         js=json.loads(message.value)
 
-            for tp, messages in msg_pack.items():
-                for message in messages:
-                    # pprint ("%s:%d:%d: key=%s value=%s" % (tp.topic, tp.partition,
-                    #                                     message.offset, message.key,
-                    #                                     message.value))
-                    # print(type(message.value))
-                    # # str ->json 변환 
-                    # tmp = json.loads(message.value)
-                    print(json.loads(message.value)['place_name'])
-
-            # 5초 주기로 new record 확인 
+                # 5초 주기로 new record 확인 
             time.sleep(5)
             
 
