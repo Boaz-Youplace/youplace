@@ -8,12 +8,15 @@ spark = SparkSession\
         .config('spark.some.config.option', 'some-value')\
         .getOrCreate()
 
-### Create json file using spark
-# sparkContext로 객체 생성
-sc = spark.sparkContext
-
-# path 내임은 [group_id]_[파티션0 기준 offset]으로 설정
+# path 네임 [group_id]_[파티션0 기준 offset]으로 설정
+test_path = './json_files/cars.json'
 path = './json_files/test.json'
-peopledf = spark.read.json(path)
 
-peopledf.printSchema()
+jeju_df = spark.read.json(path)
+jeju_df.show(5)
+jeju_df.printSchema()
+
+test_df = spark.read.json(test_path)
+test_df.show(5)
+test_df.printSchema()
+
