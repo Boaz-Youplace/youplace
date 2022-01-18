@@ -55,3 +55,5 @@ df.show(5)
 # 1) 좌표 소수점 확인 
 df.createOrReplaceTempView("gps")
 spark.sql("SELECT x,y FROM gps LIMIT 5").show()
+
+# 2) 통계처리 (명소별 몇 개인지 카운트)
