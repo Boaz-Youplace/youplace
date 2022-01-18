@@ -45,21 +45,17 @@ print("after")
 # 배열 내 요소 추출 함수 (udf 사용)
 extract_element = udf(lambda x: x[0])
 
+# udf 적용
 df=df.withColumn('x', extract_element(df["x"]))
 df=df.withColumn('y', extract_element(df["y"]))
 df=df.withColumn('place_name', extract_element(df["place_name"]))
 
-# 형 변환 함수 (udf 사용)
-convertStringToInt= udf(lambda x:int(x)) #likeCount,viewCount 사용
-convertStringToDecimal= udf(lambda x:Decimal(x)) #x,y
+# casting
+df = df.withColumn("likeCount", df["likeCount"].cast("int"))
+df = df.withColumn("viewCount", df["viewCount"].cast("int"))
+df = df.withColumn("x", df["x"].cast("decimal(24,18)"))
+df = df.withColumn("y", df["y"].cast("decimal(24,18)"))
 
-df.printSchema()
-
-print(3)
-df=df.withColumn('likeCount', convertStringToInt(df["likeCount"]))
-df=df.withColumn('viewCount', convertStringToInt(df["viewCount"]))
-df=df.withColumn('x', convertStringToDecimal(df["x"]))
-df=df.withColumn('y', convertStringToDecimal(df["y"]))
 
 df.printSchema()
 
