@@ -91,6 +91,7 @@ class KafkaConsumer_:
                             print(data)
                             print(type(data)) # dict 형태 
                             json.dump(data,f,ensure_ascii=False)
+                            f.write('\n')
                             
                 # for tp, messages in msg_pack.items():
                 #     for message in messages:
@@ -101,7 +102,7 @@ class KafkaConsumer_:
                 #         # tmp = json.loads(message.value)
                 #         js=json.loads(message.value)
 
-                # 5초 주기로 new record 확인 
+            # 5초 주기로 new record 확인 
             time.sleep(5)
             
 
