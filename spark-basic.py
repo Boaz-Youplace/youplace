@@ -3,6 +3,28 @@ import json
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import udf
 from decimal import Decimal
+from pyspark.sql import types 
+
+# pyspark에서 지원하는 타입 확인
+for t in ['BinaryType', 'BooleanType', 'ByteType', 'DateType', 
+          'DecimalType', 'DoubleType', 'FloatType', 'IntegerType', 
+           'LongType', 'ShortType', 'StringType', 'TimestampType']:
+        print(f"{t}: {getattr(types, t)().simpleString()}")
+
+'''
+BinaryType: binary
+BooleanType: boolean
+ByteType: tinyint
+DateType: date
+DecimalType: decimal(10,0)
+DoubleType: double
+FloatType: float
+IntegerType: int
+LongType: bigint
+ShortType: smallint
+StringType: string
+TimestampType: timestamp
+'''
 
 spark = SparkSession\
         .builder\
