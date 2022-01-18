@@ -16,8 +16,10 @@ for t in ['BinaryType', 'BooleanType', 'ByteType', 'DateType',
 spark = SparkSession\
         .builder\
         .appName('Python Spark SQL basic example')\
-        .config('spark.some.config.option', 'some-value')\
+        .config("spark.driver.extraClassPath", "/Users/caurental7/Downloads/mysql-connector-java-8.0.27") \
         .getOrCreate()
+        # .config('spark.some.config.option', 'some-value')\
+        
 
 # path 네임 [group_id]_[파티션0 기준 offset]으로 설정
 path = './json_files/test.json'
@@ -52,18 +54,19 @@ df.show(5)
 
 
 # Saving data to a JDBC source
-# df.write \
-#     .format("jdbc") \
-#     .option("url", "jdbc:mysql://boaz-youplace.cai20ccufxe1.ap-northeast-2.rds.amazonaws.com:3306") \
-#     .option("dbtable", "db_youplace.spark_youplace") \
-#     .option("user", "admin") \
-#     .option("password", "youplace") \
-#     .option("driver","com.mysql.jdbc.Driver",) \
-#     .option("numPartitions",5,) \
-#     .option("partitionColumn","id",) \
-#     .option("createTableColumnTypes","address_6 VARCHAR(32) , category VARCHAR(32) , id VARCHAR(32) not null , likeCount INT , place_name VARCHAR(50) not null , place_url VARCHAR(100) , publishTime varchar(50) , viewCount INT , x DECIMAL(24,18) , x DECIMAL(24,18) , primary key(id,place_name) ") 
-#     .mode('append') \
-#     .save()
+df.write \
+    .format("jdbc") \
+    .option("url", "jdbc:mysql://boaz-youplace.cai20ccufxe1.ap-northeast-2.rds.amazonaws.com:3306/") \
+    .option("dbtable", "db_youplace.tb_youplace") \
+    .option("user", "admin") \
+    .option("password", "youplace") \
+    .option("numPartitions",5,) \
+    .option("partitionColumn","id",) \
+    .option("createTableColumnTypes","address_6 VARCHAR(32) , category VARCHAR(32) , id VARCHAR(32) NOT NULL , likeCount INT , place_name VARCHAR(50) NOT NULL , place_url VARCHAR(100) , publishTime varchar(50) , viewCount INT , x DECIMAL(24,18) , x DECIMAL(24,18) , primary key(id,place_name) ") \
+    .mode('append') \
+    .save()
+#     .option("driver","com.mysql.cj.jdbc.Driver",) \
+
 
 # # Specifying create table column data types on write
 # df.write \
