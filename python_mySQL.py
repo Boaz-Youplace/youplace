@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from tokenize import Double
 import pymysql
-import mysql.connector
 from decimal import Decimal
 
 # 사용자 생성 후 권한 부여해줘야함
@@ -10,31 +9,14 @@ from decimal import Decimal
 # mysql> GRANT ALL PRIVILEGES ON {database}.* TO '{username}'@'localhost';
 # mysql> FLUSH PRIVILEGES;
 
-# create DB
-mydb = mysql.connector.connect(
-    host = "localhost",
-    user = "test",
-    password = "0000"
-)
-
-mycursor = mydb.cursor()
-
-mycursor.execute("CREATE DATABASE youplace")
-mycursor.execute("SHOW DATABASES")
-
-
-for x in mycursor:
-    print(x)
-
-# connect DB
 db = None
 
 try:
-    db = pymysql.connect(host='localhost', user='test', passwd='0000',db='youplace',charset='utf8')
+    db = pymysql.connect(host='localhost', user='root', passwd='caurental',db='youplace',charset='utf8')
     print("DB connection success")
     # create Table
     sql = '''
-    create table tb_youplace(
+    create table youplace_test(
         id varchar(32) not null,
         place_name varchar(50) not null,
         viewCount int,
@@ -61,7 +43,7 @@ try:
         with db.cursor() as cursor:
             # print(d['id'], d['place_name'][0], int(d['viewCount']), d['publishTime'], int(d['likeCount']), d['x'][0], d['y'][0], d['category'], d['place_url'], d['address_6'])
             sql = '''
-            insert into tb_youplace(id,place_name,x,y,place_url,category,address_6,publishTime,likeCount,viewCount) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+            insert into youplace_test(id,place_name,x,y,place_url,category,address_6,publishTime,likeCount,viewCount) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
             '''
             cursor.execute(sql,(d['id'],d['place_name'][0],Decimal(d['x'][0]),Decimal(d['y'][0]),d['place_url'],d['category'],d['address_6'],d['publishTime'],int(d['likeCount']),int(d['viewCount'])))
             
@@ -69,6 +51,7 @@ try:
 
 except Exception as e:
     print(e)
+    print(1)
 
 finally:
     if db is not None:
