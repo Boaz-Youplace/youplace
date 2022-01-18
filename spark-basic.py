@@ -50,10 +50,27 @@ df.printSchema()
 
 df.show(5)
 
-# 스파크 데이터프레임에 SQL을 적용시킬 수 있는 객체(feat. 통계처리) 별도 생성
 
-# 1) 좌표 소수점 확인 
-df.createOrReplaceTempView("gps")
-spark.sql("SELECT x,y FROM gps LIMIT 5").show()
+# Saving data to a JDBC source
+# df.write \
+#     .format("jdbc") \
+#     .option("url", "jdbc:mysql://boaz-youplace.cai20ccufxe1.ap-northeast-2.rds.amazonaws.com:3306") \
+#     .option("dbtable", "db_youplace.spark_youplace") \
+#     .option("user", "admin") \
+#     .option("password", "youplace") \
+#     .option("driver","com.mysql.jdbc.Driver",) \
+#     .option("numPartitions",5,) \
+#     .option("partitionColumn","id",) \
+#     .option("createTableColumnTypes","address_6 VARCHAR(32) , category VARCHAR(32) , id VARCHAR(32) not null , likeCount INT , place_name VARCHAR(50) not null , place_url VARCHAR(100) , publishTime varchar(50) , viewCount INT , x DECIMAL(24,18) , x DECIMAL(24,18) , primary key(id,place_name) ") 
+#     .mode('append') \
+#     .save()
 
-# 2) 통계처리 (명소별 몇 개인지 카운트)
+# # Specifying create table column data types on write
+# df.write \
+#     .option("createTableColumnTypes", "name CHAR(64), comments VARCHAR(1024)") \
+#     .jdbc("jdbc:postgresql:dbserver", "schema.tablename",
+#           properties={"user": "username", "password": "password"})
+
+# # 스파크 데이터프레임에 SQL을 적용시킬 수 있는 객체(feat. 통계처리) 별도 생성
+
+# # 1) 
