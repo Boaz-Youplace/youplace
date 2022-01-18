@@ -64,7 +64,7 @@ def on_send_error(excp):
 if __name__ == '__main__':
     # 1) 전처리 파일 실행 (인자 바꿔가며 수정) (입력값으로 바꿀지?)
     q='Jeju vlog'
-    order='rating'
+    order='date'
     max_result=5
     publishedAfter = None
     publishedBefore = None
