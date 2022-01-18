@@ -12,6 +12,7 @@ spark = SparkSession\
 # sparkContext로 객체 생성
 sc = spark.sparkContext
 
+# path 내임은 [group_id]_[파티션0 기준 offset]으로 설정
 path = './json_files/test.json'
 peopledf = spark.read.json(path)
 
