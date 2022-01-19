@@ -20,10 +20,6 @@ def view_map_jh(request):
 def view_map_es(request):
     queryset = TbYouplace.objects.all()
 
-    # 126.345010602598690000
-    # 33.396700480684250000
-    # 아르떼뮤지엄 제주
-
     query = {
         'x': 126.345010602598690000,
         'y': 33.396700480684250000,
