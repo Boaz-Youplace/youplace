@@ -18,8 +18,7 @@
 <button onclick="setBounds()">지도 범위 재설정 하기</button> 
 </p>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=375815fab253599cd1e7cc21902949f4"></script>
-<script type="text/javascript" src="/database_mysql.js"></script> 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=375815fab253599cd1e7cc21902949f4"></script> 
 <script>
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
@@ -34,6 +33,28 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+var mysql = require('mysql');
+
+var db = mysql.createConnection({
+  host : 'boaz-youplace.cai20ccufxe1.ap-northeast-2.rds.amazonaws.com',
+  user : 'admin',
+  password : 'youplace',
+  database : 'db_youplace'
+});
+
+db.connect();
+
+var sql = 'SELECT * FROM tb_youplace';
+
+db.query(sql,(err,rows,fields) => {
+  if (err){
+    console.log(err);
+  } else {
+    console.log('rows',rows);
+  }
+});
+conn.end();
 
 // 버튼을 클릭하면 아래 배열의 좌표들이 모두 보이게 지도 범위를 재설정합니다 
 var points = [
