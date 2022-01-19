@@ -65,6 +65,15 @@ if __name__ == '__main__':
     # 1) 전처리 파일 실행 (인자 바꿔가며 수정) (입력값으로 바꿀지?)
     q='Jeju vlog'
     order='date'
+
+    '''
+    date – 리소스를 만든 날짜를 기준으로 최근 항목부터 시간 순서대로 리소스를 정렬합니다.
+    rating – 높은 평가부터 낮은 평가순으로 리소스를 정렬합니다.
+    relevance – 검색 쿼리에 대한 관련성을 기준으로 리소스를 정렬합니다. 이 매개변수의 기본값입니다.
+    title – 제목에 따라 문자순으로 리소스를 정렬합니다.
+    videoCount – 업로드한 동영상 수에 따라 채널을 내림차순으로 정렬합니다.
+    viewCount – 리소스를 조회수가 높은 항목부터 정렬합니다.
+    '''
     max_result=5
     publishedAfter = None
     publishedBefore = None
