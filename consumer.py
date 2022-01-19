@@ -82,7 +82,7 @@ class KafkaConsumer_:
             print(p0_offset_after,2)
 
             
-            if p0_offset_after - p0_offset_before > 25 :
+            if p0_offset_after - p0_offset_before > 10 :
                 with open('./json_files/test.json','w',encoding='utf-8') as f:
                     p0_offset_before=p0_offset_after
                     for tp, messages in msg_pack.items():
