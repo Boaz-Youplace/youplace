@@ -10,33 +10,43 @@ from decimal import Decimal
 from pyspark.sql import types 
 from pyspark.sql.functions import to_timestamp
 
-spark = SparkSession\
-        .builder\
-        .appName('Python Spark SQL basic example')\
-        .config('spark.some.config.option', 'some-value')\
-        .getOrCreate()
+def make_session():
+    spark = SparkSession\
+            .builder\
+            .appName('Python Spark SQL basic example')\
+            .config('spark.some.config.option', 'some-value')\
+            .getOrCreate()
+    return spark
+
+def load_data(spark):
+    # load data to a JDBC source
+    try:
+        jdbcDF=spark.read \
+        .format("jdbc") \
+        .option("url", "jdbc:mysql://boaz-youplace.cai20ccufxe1.ap-northeast-2.rds.amazonaws.com:3306/?useSSL=false") \
+        .option("dbtable", "db_youplace.tb_youplace") \
+        .option("user", "admin") \
+        .option("password", "youplace") \
+        .option("numPartitions",5) \
+        .option("driver","com.mysql.cj.jdbc.Driver",) \
+        .load()
+    except Exception as e:
+            # 대부분 중복 데이터(pk동일) 삽입에 대한 오류임 
+            print(e)
+
+    print("complete to load data to rds-mysql")
+
+    return jdbcDF
 
 
-# load data to a JDBC source
-try:
-    jdbcDF=spark.read \
-    .format("jdbc") \
-    .option("url", "jdbc:mysql://boaz-youplace.cai20ccufxe1.ap-northeast-2.rds.amazonaws.com:3306/?useSSL=false") \
-    .option("dbtable", "db_youplace.tb_youplace") \
-    .option("user", "admin") \
-    .option("password", "youplace") \
-    .option("numPartitions",5) \
-    .option("driver","com.mysql.cj.jdbc.Driver",) \
-    .load()
-except Exception as e:
-        # 대부분 중복 데이터(pk동일) 삽입에 대한 오류임 
-        print(e)
+def groupby_count(df):
+    # place_name기준으로 group_by 후 count
+    df=df.groupby("place_name").count()
+    # count 기준으로 정렬
+    df=df.sort(desc("count"))
+    return df
 
-print("complete to load data to rds-mysql")
+def print_df(df):
+    df.show()
 
-
-# place_name기준으로 group_by 후 count
-jdbcDF=jdbcDF.groupby("place_name").count()
-
-# count 기준으로 정렬
-jdbcDF.sort(desc("count")).show()
+print_df(groupby_count(load_data(make_session())))
