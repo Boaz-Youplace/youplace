@@ -88,10 +88,10 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES ={
     'default' : {
         'ENGINE' : 'django.db.backends.mysql',
-        'NAME' : 'youplace',
-        'USER' : 'root',
-        'PASSWORD' : 'caurental',
-        'HOST' : 'localhost',
+        'NAME' : 'db_youplace',
+        'USER' : 'admin',
+        'PASSWORD' : 'youplace',
+        'HOST' : 'boaz-youplace.cai20ccufxe1.ap-northeast-2.rds.amazonaws.com',
         'PORT' :3306,
         'OPTIONS': {
             'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'",
