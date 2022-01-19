@@ -39,14 +39,18 @@ def load_data(spark):
     return jdbcDF
 
 
-def groupby_count(df):
+def groupby_count(df,column):
     # place_name기준으로 group_by 후 count
-    df=df.groupby("place_name").count()
+    df=df.groupby(column).count()
     # count 기준으로 정렬
     df=df.sort(desc("count"))
     return df
 
 def print_df(df):
     df.show()
+    
 
-print_df(groupby_count(load_data(make_session())))
+# print_df(groupby_count(load_data(make_session()),"place_name"))
+# print_df(groupby_count(load_data(make_session()),"category"))
+categpry_df=groupby_count(load_data(make_session()),"category")
+print(categpry_df)
