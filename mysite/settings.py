@@ -90,7 +90,7 @@ DATABASES ={
         'ENGINE' : 'django.db.backends.mysql',
         'NAME' : 'youplace',
         'USER' : 'root',
-        'PASSWORD' : 'caurental',
+        'PASSWORD' : 'rudalsdl!!99',
         'HOST' : 'localhost',
         'PORT' :3306,
         'OPTIONS': {
