@@ -32,7 +32,7 @@ def load_data(spark):
         .option("dbtable", "db_youplace.tb_youplace") \
         .option("user", "admin") \
         .option("password", "youplace") \
-        .option("numPartitions",5) \
+        .option("numPartitions",20) \
         .option("driver","com.mysql.cj.jdbc.Driver",) \
         .load()
     except Exception as e:
@@ -54,9 +54,13 @@ def groupby_count(df,column):
 def print_df(df):
     df.show()
     
-# if __name__=='__main__':
-#     place_name_df=groupby_count(load_data(spark),"place_name")
-#     sql_limit_10(place_name_df)
+if __name__=='__main__':
+    place_name_df=groupby_count(load_data(spark),"place_name")
+    sql_limit_10(place_name_df)
 
-#     categpry_df=groupby_count(load_data(spark),"category")
-#     sql_limit_10(categpry_df)
+    categpry_df=groupby_count(load_data(spark),"category")
+    sql_limit_10(categpry_df)
+    
+
+    address_df=groupby_count(load_data(spark),"address_6")
+    sql_limit_10(address_df)

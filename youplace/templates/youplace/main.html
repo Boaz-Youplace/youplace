@@ -1,9 +1,37 @@
-안녕 이 글이 보이나요?
-{% for data in datas %}
+{% load staticfiles %}
+
+<html>
+<head>
+    <title>Video List</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+</head>
+<body>
+<div class="content container">
+    <header class="page-header" style="overflow: auto;">
+        <h1 style="display: inline;">영상 재생 목록</h1>
+    </header>
+    <div class="row">
+        <div class="col-md-12">
+            {% for video in video_list %}
+                <a href="/{{ video.id }}">
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</body>
+</html>=
+<!-- <h3>영상 속 명소부문🥇 실시간 랭킹</h3>
+{% for p_rank in p_ranks %}
     <div>
-        <p>{{ data.x }}</p>
-        <p>{{ data.y }}</p>
-        <p>{{ data.place_name }}</p>
-       
+        <p>{{forloop.counter}}위 : {{p_rank.place_name }} (영상등장횟수:{{p_rank.count}}) </p>
     </div>
 {% endfor %}
+
+<h3>카테고리 부문🥇 실시간 랭킹</h3>
+{% for c_rank in c_ranks %}
+    <div>
+        <p>{{forloop.counter}}위 : {{c_rank.place_name }} (영상등장횟수:{{c_rank.count}}) </p>
+    </div>
+{% endfor %} -->
