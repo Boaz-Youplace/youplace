@@ -21,10 +21,6 @@ spark = SparkSession\
         .appName('Python Spark SQL basic example')\
         .config('spark.some.config.option', 'some-value')\
         .getOrCreate()
-        # .config("spark.driver.extraClassPath", "/Users/caurental7/Downloads/mysql-connector-java-8.0.27") \
-        
-        
-        
 
 # path 네임 [group_id]_[파티션0 기준 offset]으로 설정
 path = './json_files/test.json'
