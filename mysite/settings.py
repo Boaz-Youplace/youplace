@@ -73,10 +73,26 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# 장고에서 기본으로 제공하는 sqlite DB
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+# 우리가 연동할 DB
+DATABASE ={
+    'default' : {
+        'ENGINE' : 'django.db.bachends.mysql',
+        'NAME' : 'boaz',
+        'USER' : 'root',
+        'PASSWORD' : 'caurental',
+        'HOST' : 'localhost',
+        'PORT' :3306,
+        # 'OPTIONS': {
+        #     'init_command' : 'SET sql_mode='STRICT_NAME_TABLES'",
+        # },
     }
 }
 
