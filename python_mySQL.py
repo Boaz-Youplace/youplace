@@ -12,7 +12,7 @@ from decimal import Decimal
 db = None
 
 try:
-    db = pymysql.connect(host='localhost', user='root', passwd='caurental',db='youplace',charset='utf8')
+    db = pymysql.connect(host='localhost', user='root', passwd='rudalsdl!!99',db='youplace',charset='utf8')
     print("DB connection success")
     # create Table
     sql = '''

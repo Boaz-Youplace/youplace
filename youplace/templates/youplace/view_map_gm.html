@@ -1,20 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8"/>
-	<title>Kakao 지도 시작하기_경민언니😘</title>
+    <meta charset="utf-8">
+    <title>지도 범위 재설정 하기</title>
 </head>
 <body>
-	<div id="map" style="width:800px;height:600px;"></div>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=375815fab253599cd1e7cc21902949f4"></script>
-	<script>
-		var container = document.getElementById('map');
-		var options = {
-			center: new kakao.maps.LatLng(33.450701, 126.570667),
-			level: 3
-		};
+<div id="map" style="width:500px;height:400px;"></div>
+<p>
+<button onclick="setBounds()">지도 범위 재설정 하기</button> 
+</p>
 
-		var map = new kakao.maps.Map(container, options);
-	</script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=375815fab253599cd1e7cc21902949f4"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        // 지도의 중심좌표
+		//center: new kakao.maps.LatLng(33.438107106660055, 126.52283120392389), //제주시 중부
+		center: new kakao.maps.LatLng(33.38527638949422, 126.30386105785516), //제주시 서부
+		//center: new kakao.maps.LatLng(33.499398992181554, 126.77526522253555), //제주시 북부
+		//center: new kakao.maps.LatLng(33.26796257891194, 126.30386105910041), //서귀포시 서부
+		//center: new kakao.maps.LatLng(33.29168120922014, 126.49809703677447), //서귀포시 중부
+		//center: new kakao.maps.LatLng(33.36826656497475, 126.76871794959403), //서귀포시 븍부
+        level: 9 // 지도의 확대 레벨
+    };
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+ 
+// 버튼을 클릭하면 아래 배열의 좌표들이 모두 보이게 지도 범위를 재설정합니다 
+var points = [
+    new kakao.maps.LatLng(33.452278, 126.567803),
+    new kakao.maps.LatLng(33.452671, 126.574792),
+    new kakao.maps.LatLng(33.451744, 126.572441)
+];
+
+// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+var bounds = new kakao.maps.LatLngBounds();    
+
+var i, marker;
+for (i = 0; i < points.length; i++) {
+    // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
+    marker =     new kakao.maps.Marker({ position : points[i] });
+    marker.setMap(map);
+    
+    // LatLngBounds 객체에 좌표를 추가합니다
+    bounds.extend(points[i]);
+}
+
+function setBounds() {
+    // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+    // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+    map.setBounds(bounds);
+}
+</script>
 </body>
 </html>
