@@ -1,4 +1,5 @@
 import json 
+from pyspark.sql.functions import desc
 import findspark
 
 findspark.add_packages('mysql:mysql-connector-java:8.0.11')
@@ -34,6 +35,8 @@ except Exception as e:
 print("complete to load data to rds-mysql")
 
 
-# # 스파크 데이터프레임에 SQL을 적용시킬 수 있는 객체(feat. 통계처리) 별도 생성
+# place_name기준으로 group_by 후 count
+jdbcDF=jdbcDF.groupby("place_name").count()
 
-# # 1) 
+# count 기준으로 정렬
+jdbcDF.sort(desc("count")).show()
