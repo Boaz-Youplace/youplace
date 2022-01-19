@@ -1,15 +1,33 @@
 from django.shortcuts import render
+from youplace.models import TbYouplace
+# using을 이용해 앞서 설정한 external 이름을 넣어주면 된다.
+import json
 
 # Create your views here.
  
 def main(request):
-    return render(request,'youplace/main.html',{})
+    queryset = TbYouplace.objects.all()
+    return render(request,'youplace/main.html',{'datas':queryset})
 
 def view_map_gm(request):
-    return render(request, 'youplace/view_map_gm.html', {})
+    queryset = TbYouplace.objects.all()
+    return render(request, 'youplace/view_map_gm.html', {'datas':queryset})
 
 def view_map_jh(request):
-    return render(request, 'youplace/view_map_jh.html', {})
+    queryset = TbYouplace.objects.all()
+    return render(request, 'youplace/view_map_jh.html', {'datas':queryset})
 
 def view_map_es(request):
-    return render(request, 'youplace/view_map_es.html', {})
+    queryset = TbYouplace.objects.all()
+
+    # 126.345010602598690000
+    # 33.396700480684250000
+    # 아르떼뮤지엄 제주
+
+    query = {
+        'x': 126.345010602598690000,
+        'y': 33.396700480684250000,
+        'place_name': '아르떼뮤지엄 제주'
+    }
+    queryJson = json.dumps(query)
+    return render(request, 'youplace/view_map_es.html', {'all':queryset,'queryJson':queryJson})

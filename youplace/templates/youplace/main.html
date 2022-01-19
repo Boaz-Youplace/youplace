@@ -1,1 +1,9 @@
 안녕 이 글이 보이나요?
+{% for data in datas %}
+    <div>
+        <p>{{ data.x }}</p>
+        <p>{{ data.y }}</p>
+        <p>{{ data.place_name }}</p>
+       
+    </div>
+{% endfor %}
