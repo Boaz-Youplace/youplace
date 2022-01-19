@@ -47,7 +47,7 @@ class KafkaProducer_:
         start = time.time()
         for record in records:
             print("[",self.topic_name,"]에 메시지 전송중....")
-            print(type(record))
+            print(record)
             self.producer.send(self.topic_name, record)
             # 보내는 방식이 총 3가지 https://data-engineer-tech.tistory.com/14?category=847456 (비동기 send)
             self.producer.flush()
@@ -69,15 +69,16 @@ if __name__ == '__main__':
     '''
     date – 리소스를 만든 날짜를 기준으로 최근 항목부터 시간 순서대로 리소스를 정렬합니다.
     rating – 높은 평가부터 낮은 평가순으로 리소스를 정렬합니다.
+
     relevance – 검색 쿼리에 대한 관련성을 기준으로 리소스를 정렬합니다. 이 매개변수의 기본값입니다.
     title – 제목에 따라 문자순으로 리소스를 정렬합니다.
     videoCount – 업로드한 동영상 수에 따라 채널을 내림차순으로 정렬합니다.
     viewCount – 리소스를 조회수가 높은 항목부터 정렬합니다.
     '''
     max_result=5
-    publishedAfter = None
-    publishedBefore = None
-    dataset = collect_data(q,order)
+    publishedAfter = '2021-05-05T00:00:00Z'
+    publishedBefore = '2021-05-07T00:00:00Z'
+    dataset = collect_data(q,order,publishedAfter,publishedBefore)
     records = data_processing_(dataset)
     #2) producer객체 topic개수만큼 생성 - 아직 안함
     #3) producer에 records 넣기

@@ -90,6 +90,7 @@ class KafkaConsumer_:
                             data=literal_eval(message.value)
                             print(data)
                             print(type(data)) # dict 형태 
+                            
                             json.dump(data,f,ensure_ascii=False)
                             f.write('\n')
                             
