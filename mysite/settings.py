@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import pymysql
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -82,18 +84,19 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # }
 
 # 우리가 연동할 DB
-DATABASE ={
+DATABASES ={
     'default' : {
-        'ENGINE' : 'django.db.bachends.mysql',
-        'NAME' : 'boaz',
+        'ENGINE' : 'django.db.backends.mysql',
+        'NAME' : 'youplace',
         'USER' : 'root',
         'PASSWORD' : 'caurental',
         'HOST' : 'localhost',
         'PORT' :3306,
-        # 'OPTIONS': {
-        #     'init_command' : 'SET sql_mode='STRICT_NAME_TABLES'",
-        # },
+        'OPTIONS': {
+            'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
     }
+            
 }
 
 
