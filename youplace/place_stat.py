@@ -10,13 +10,18 @@ from decimal import Decimal
 from pyspark.sql import types 
 from pyspark.sql.functions import to_timestamp
 
-def make_session():
-    spark = SparkSession\
-            .builder\
-            .appName('Python Spark SQL basic example')\
-            .config('spark.some.config.option', 'some-value')\
-            .getOrCreate()
-    return spark
+
+spark = SparkSession\
+        .builder\
+        .appName('Python Spark SQL basic example')\
+        .config('spark.some.config.option', 'some-value')\
+        .getOrCreate()
+    
+def sql_limit_10(df):
+    df=df.createOrReplaceTempView("tmp_df")
+    df=spark.sql("SELECT * FROM tmp_df LIMIT 10")
+    df.show()
+    return df
 
 def load_data(spark):
     # load data to a JDBC source
@@ -49,8 +54,9 @@ def groupby_count(df,column):
 def print_df(df):
     df.show()
     
+# if __name__=='__main__':
+#     place_name_df=groupby_count(load_data(spark),"place_name")
+#     sql_limit_10(place_name_df)
 
-# print_df(groupby_count(load_data(make_session()),"place_name"))
-# print_df(groupby_count(load_data(make_session()),"category"))
-categpry_df=groupby_count(load_data(make_session()),"category")
-print(categpry_df)
+#     categpry_df=groupby_count(load_data(spark),"category")
+#     sql_limit_10(categpry_df)

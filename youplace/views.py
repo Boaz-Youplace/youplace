@@ -2,6 +2,7 @@ from django.shortcuts import render
 from youplace.models import TbYouplace
 # using을 이용해 앞서 설정한 external 이름을 넣어주면 된다.
 import json
+from place_stat import load_data,groupby_count,print_df,spark
 
 # Create your views here.
  
