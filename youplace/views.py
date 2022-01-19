@@ -1,6 +1,9 @@
 from django.shortcuts import render
 
 # Create your views here.
+ 
+def main(request):
+    return render(request,'youplace/main.html',{})
 
 def view_map_gm(request):
     return render(request, 'youplace/view_map_gm.html', {})
