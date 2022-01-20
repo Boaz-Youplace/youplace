@@ -1,6 +1,50 @@
-{% load staticfiles %}
-
 <html>
+<head>
+    <title>Video Detail</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+</head>
+<body>
+<div class="content container">
+    <header class="page-header">
+        <h1>메인페이지입니다</h1>
+    </header>
+    <h3>영상 속 명소부문🥇 실시간 랭킹</h3>
+            {% for p_rank in p_ranks %}
+                <div>
+                    <p>{{forloop.counter}}위 : {{p_rank.place_name }} (영상등장횟수:{{p_rank.count}}) </p>
+                </div>
+            {% endfor %}
+    <h3>카테고리 부문🥇 실시간 랭킹</h3>
+    {% for c_rank in c_ranks %}
+        <div>
+            <p>{{forloop.counter}}위 : {{c_rank.place_name }} (영상등장횟수:{{c_rank.count}}) </p>
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-16">
+            <div id="player"></div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            videoId: 'tauOYhtbs-o'
+        });
+    }
+</script>
+</html>
+
+<!-- <html>
 <head>
     <title>Video List</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -13,25 +57,32 @@
     </header>
     <div class="row">
         <div class="col-md-12">
-            {% for video in video_list %}
-                <a href="/{{ video.id }}">
-                </a>
+            
+
+            <h3>카테고리 부문🥇 실시간 랭킹</h3>
+            {% for c_rank in c_ranks %}
+                <div>
+                    <p>{{forloop.counter}}위 : {{c_rank.place_name }} (영상등장횟수:{{c_rank.count}}) </p>
+                </div>
             {% endfor %}
+            <div id="player"></div>
         </div>
+        
     </div>
 </div>
 </body>
-</html>=
-<!-- <h3>영상 속 명소부문🥇 실시간 랭킹</h3>
-{% for p_rank in p_ranks %}
-    <div>
-        <p>{{forloop.counter}}위 : {{p_rank.place_name }} (영상등장횟수:{{p_rank.count}}) </p>
-    </div>
-{% endfor %}
 
-<h3>카테고리 부문🥇 실시간 랭킹</h3>
-{% for c_rank in c_ranks %}
-    <div>
-        <p>{{forloop.counter}}위 : {{c_rank.place_name }} (영상등장횟수:{{c_rank.count}}) </p>
-    </div>
-{% endfor %} -->
+
+        <script>
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        
+            var player;
+            function onYouTubeIframeAPIReady() {
+                player = new YT.Player('player', {
+                    videoId: '4r7j68_Xpk0'
+                });
+            }
+        </script>
+</html> -->
