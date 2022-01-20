@@ -8,6 +8,10 @@
 	<div id="map" style="width:800px;height:600px;"></div>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=375815fab253599cd1e7cc21902949f4"></script>
 	<script>
+		console.log('dkufhad')
+		var hello = JSON.parse("{{ videos|escapejs }}");
+		console.log(hello)
+		
 		var container = document.getElementById('map');
 		var options = {
 			center: new kakao.maps.LatLng(33.450701, 126.570667),

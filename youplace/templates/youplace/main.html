@@ -1,88 +1,59 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Video Detail</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <meta charset="utf-8">
+    <title>여러개 마커 표시하기</title>
+    
 </head>
 <body>
-<div class="content container">
-    <header class="page-header">
-        <h1>메인페이지입니다</h1>
-    </header>
-    <h3>영상 속 명소부문🥇 실시간 랭킹</h3>
-            {% for p_rank in p_ranks %}
-                <div>
-                    <p>{{forloop.counter}}위 : {{p_rank.place_name }} (영상등장횟수:{{p_rank.count}}) </p>
-                </div>
-            {% endfor %}
-    <h3>카테고리 부문🥇 실시간 랭킹</h3>
-    {% for c_rank in c_ranks %}
-        <div>
-            <p>{{forloop.counter}}위 : {{c_rank.place_name }} (영상등장횟수:{{c_rank.count}}) </p>
-        </div>
-    {% endfor %}
-    <div class="row">
-        <div class="col-md-16">
-            <div id="player"></div>
-        </div>
-    </div>
-</div>
-</body>
+<div id="map" style="width:100%;height:350px;"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=375815fab253599cd1e7cc21902949f4"></script>
 <script>
-    var tag = document.createElement('script');
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+    mapOption = { 
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 7 // 지도의 확대 레벨
+    };
 
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-    var player;
-    function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-            videoId: 'tauOYhtbs-o'
-        });
-    }
+// 마커를 표시할 위치와 title 객체 배열입니다 
+
+var videos = JSON.parse("{{ videoJson|escapejs }}");
+console.log(videos,1)
+
+var positions = [];
+for (var i = 0; i < Object.keys(videos).length; i++) {
+var content = {
+    latlng: new kakao.maps.LatLng(videos[i].fields.y, videos[i].fields.x),
+    lat : videos[i].fields.y,
+    lng : videos[i].fields.x,
+    place_name : videos[i].fields.place_name,
+}
+positions.push(content);
+};
+console.log(positions);
+
+// 마커 이미지의 이미지 주소입니다
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+    
+for (var i = 0; i < positions.length; i ++) {
+    
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(24, 35); 
+    
+    // 마커 이미지를 생성합니다    
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title : positions[i].place_name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지 
+    });
+}
 </script>
-</html>
-
-<!-- <html>
-<head>
-    <title>Video List</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-</head>
-<body>
-<div class="content container">
-    <header class="page-header" style="overflow: auto;">
-        <h1 style="display: inline;">영상 재생 목록</h1>
-    </header>
-    <div class="row">
-        <div class="col-md-12">
-            
-
-            <h3>카테고리 부문🥇 실시간 랭킹</h3>
-            {% for c_rank in c_ranks %}
-                <div>
-                    <p>{{forloop.counter}}위 : {{c_rank.place_name }} (영상등장횟수:{{c_rank.count}}) </p>
-                </div>
-            {% endfor %}
-            <div id="player"></div>
-        </div>
-        
-    </div>
-</div>
 </body>
-
-
-        <script>
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        
-            var player;
-            function onYouTubeIframeAPIReady() {
-                player = new YT.Player('player', {
-                    videoId: '4r7j68_Xpk0'
-                });
-            }
-        </script>
-</html> -->
+</html>

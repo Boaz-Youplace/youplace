@@ -1,4 +1,5 @@
-import json 
+import json
+from venv import create 
 from pyspark.sql.functions import desc
 import findspark
 
@@ -10,16 +11,17 @@ from decimal import Decimal
 from pyspark.sql import types 
 from pyspark.sql.functions import to_timestamp
 
-
-spark = SparkSession\
-        .builder\
-        .appName('Python Spark SQL basic example')\
-        .config('spark.some.config.option', 'some-value')\
-        .getOrCreate()
+def create_session():
+    spark = SparkSession\
+            .builder\
+            .appName('Python Spark SQL basic example')\
+            .config('spark.some.config.option', 'some-value')\
+            .getOrCreate()
+    return spark
     
 def sql_limit_10(df):
     df=df.createOrReplaceTempView("tmp_df")
-    df=spark.sql("SELECT * FROM tmp_df LIMIT 10")
+    df=create_session().sql("SELECT * FROM tmp_df LIMIT 10")
     df.show()
     return df
 
@@ -43,24 +45,30 @@ def load_data(spark):
 
     return jdbcDF
 
+def basic_groupby(df,column):
+    df=df.groupby(column)
+    df.show(5)
+    return df
 
 def groupby_count(df,column):
     # place_name기준으로 group_by 후 count
     df=df.groupby(column).count()
     # count 기준으로 정렬
     df=df.sort(desc("count"))
+    df.show(5)
     return df
 
 def print_df(df):
     df.show()
     
 if __name__=='__main__':
-    place_name_df=groupby_count(load_data(spark),"place_name")
-    sql_limit_10(place_name_df)
+    # place_name_df=groupby_count(load_data(spark),"place_name")
+    # sql_limit_10(place_name_df)
 
-    categpry_df=groupby_count(load_data(spark),"category")
-    sql_limit_10(categpry_df)
+    # categpry_df=groupby_count(load_data(spark),"category")
+    # sql_limit_10(categpry_df)
     
+    # lala=groupby_count(load_data(spark),"id")
 
-    address_df=groupby_count(load_data(spark),"address_6")
+    address_df=groupby_count(load_data(create_session()),"address_6")
     sql_limit_10(address_df)
