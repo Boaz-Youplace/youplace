@@ -25,13 +25,13 @@ console.log(videos,1)
 
 var positions = [];
 for (var i = 0; i < Object.keys(videos).length; i++) {
-var content = {
-    latlng: new kakao.maps.LatLng(videos[i].fields.y, videos[i].fields.x),
-    lat : videos[i].fields.y,
-    lng : videos[i].fields.x,
-    place_name : videos[i].fields.place_name,
-}
-positions.push(content);
+    var content = {
+        latlng: new kakao.maps.LatLng(videos[i].fields.y, videos[i].fields.x),
+        lat : videos[i].fields.y,
+        lng : videos[i].fields.x,
+        place_name : videos[i].fields.place_name,
+    }
+    positions.push(content);
 };
 console.log(positions);
 

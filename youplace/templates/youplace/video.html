@@ -1,0 +1,106 @@
+<html>
+<head>
+    <title>Video Detail</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+</head>
+<body>
+<div id="map" style="width:100%;height:400px;"></div>
+<div id="player" ></div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=375815fab253599cd1e7cc21902949f4"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+    mapOption = { 
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 9// 지도의 확대 레벨
+    };
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+// 마커를 표시할 위치와 title 객체 배열입니다 
+
+var videos = JSON.parse("{{ videoJson|escapejs }}");
+console.log(videos,1)
+
+var positions = [];
+for (var i = 0; i < Object.keys(videos).length; i++) {
+    var content = {
+        latlng: new kakao.maps.LatLng(videos[i].fields.y, videos[i].fields.x),
+        lat : videos[i].fields.y,
+        lng : videos[i].fields.x,
+        place_name : videos[i].fields.place_name,
+    }
+    positions.push(content);
+};
+console.log(positions);
+
+// 마커 이미지의 이미지 주소입니다
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+
+var bounds = new kakao.maps.LatLngBounds(); 
+
+var marker;
+for (var i = 0; i < positions.length; i ++) {
+    
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(24, 35); 
+    
+    // 마커 이미지를 생성합니다    
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title : positions[i].place_name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지 
+    });
+
+marker.setMap(map);
+//     // LatLngBounds 객체에 좌표를 추가합니다
+//     bounds.extend(positions[i]);
+
+// map.setBounds(bounds);
+    
+    
+
+
+
+// // -------------------------
+// // 유튜브 영상 재생 
+// var tag = document.createElement('script');
+
+// tag.src = "https://www.youtube.com/iframe_api";
+// var firstScriptTag = document.getElementsByTagName('script')[0];
+// firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+// var id = [];
+// for (var i=0; i<Object.keys(videos).length;i++){
+//     var content = {
+//         id : videos[i].pk
+//     }
+//     id.push(content)
+// };
+// console.log(id)
+
+// var player;
+// for (var i=0; i< id.length;i++){
+//     console.log(id[i].id,typeof(id[i].id))
+//     videoId = id[i].id
+
+//     function onYouTubeIframeAPIReady() {
+//         player = new YT.Player('player', {
+//             videoId: videoId
+//         });
+//         console.log(videoId)
+//     }
+// }
+
+
+}
+</script>
+
+
+    
+</body>
+</html>

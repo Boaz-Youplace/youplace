@@ -25,7 +25,12 @@ def main(request):
     return render(request,'youplace/main.html', context)
 
 def video(request):
-    return render(request,'youplace/video.html',)
+    videos = TbYouplace.objects.filter(address_6='애월,한림,한경(제주시 서부)').order_by('-viewcount')[:5]
+    videoJson =serializers.serialize('json',videos)
+    context = {
+        'videoJson':videoJson
+    }
+    return render(request,'youplace/video.html',context)
 
 def video_detail(request, pk):
     video = get_object_or_404(TbYouplace, pk=pk)
