@@ -26,8 +26,6 @@ var positions = [];
 for (var i = 0; i < Object.keys(videos).length; i++) {
     var content = {
         latlng: new kakao.maps.LatLng(videos[i].fields.y, videos[i].fields.x),
-        lat : videos[i].fields.y,
-        lng : videos[i].fields.x,
         place_name : videos[i].fields.place_name,
     }
     positions.push(content);
@@ -49,55 +47,52 @@ for (var i = 0; i < positions.length; i ++) {
     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
     
     // 마커를 생성합니다
-    var marker = new kakao.maps.Marker({
-        map: map, // 마커를 표시할 지도
+    marker = new kakao.maps.Marker({
         position: positions[i].latlng, // 마커를 표시할 위치
-        title : positions[i].place_name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-        image : markerImage // 마커 이미지 
     });
 
-marker.setMap(map);
-//     // LatLngBounds 객체에 좌표를 추가합니다
-//     bounds.extend(positions[i]);
+    marker.setMap(map);
+    // LatLngBounds 객체에 좌표를 추가합니다
+    bounds.extend(positions[i].latlng);
+}
 
-// map.setBounds(bounds);
-    
-    
-
+// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+// 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+map.setBounds(bounds);
 
 
 // // -------------------------
 // // 유튜브 영상 재생 
-// var tag = document.createElement('script');
+var tag = document.createElement('script');
 
-// tag.src = "https://www.youtube.com/iframe_api";
-// var firstScriptTag = document.getElementsByTagName('script')[0];
-// firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-// var id = [];
-// for (var i=0; i<Object.keys(videos).length;i++){
-//     var content = {
-//         id : videos[i].pk
-//     }
-//     id.push(content)
-// };
-// console.log(id)
+var id = [];
+for (var i=0; i<Object.keys(videos).length;i++){
+    var content = {
+        id : videos[i].pk
+    }
+    id.push(content)
+};
+console.log(id)
 
-// var player;
-// for (var i=0; i< id.length;i++){
-//     console.log(id[i].id,typeof(id[i].id))
-//     videoId = id[i].id
+var player;
+for (var i=0; i< id.length;i++){
+    console.log(id[i].id,typeof(id[i].id))
+    videoId = id[i].id
 
-//     function onYouTubeIframeAPIReady() {
-//         player = new YT.Player('player', {
-//             videoId: videoId
-//         });
-//         console.log(videoId)
-//     }
-// }
-
-
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            videoId: videoId
+        });
+        console.log(videoId)
+    }
 }
+
+
+
 </script>
 
 
