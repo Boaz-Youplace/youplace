@@ -53,16 +53,7 @@ class KafkaProducer_:
             self.producer.flush()
         print("걸린시간 :",time.time()-start)
 
-
-    
-if __name__ == '__main__':
-    # 1) 전처리 파일 실행 (인자 바꿔가며 수정) (입력값으로 바꿀지?)
-    querys = ['제주 Vlog','제주여행 브이로그','제주브이로그','제주도 브이로그','제주도 여행 브이로그','제주도 여행','제주 여행']
-    order = ['rating','date','videoCount']
-    # q='Jeju vlog'
-    # order='rating'
-
-    '''
+'''
     date – 리소스를 만든 날짜를 기준으로 최근 항목부터 시간 순서대로 리소스를 정렬합니다.
     rating – 높은 평가부터 낮은 평가순으로 리소스를 정렬합니다.
     videoCount – 업로드한 동영상 수에 따라 채널을 내림차순으로 정렬합니다.
@@ -70,17 +61,44 @@ if __name__ == '__main__':
     relevance – 검색 쿼리에 대한 관련성을 기준으로 리소스를 정렬합니다. 이 매개변수의 기본값입니다.
     title – 제목에 따라 문자순으로 리소스를 정렬합니다.
     viewCount – 리소스를 조회수가 높은 항목부터 정렬합니다.
-    '''
-    max_result=5
-    publishedAfter=None
-    publishedBefore=None
-    dataset = collect_data(q,order,publishedAfter,publishedBefore)
-    records = data_processing_(dataset)
-    #2) producer객체 topic개수만큼 생성 - 아직 안함
-    #3) producer에 records 넣기
-    test_producer = KafkaProducer_()
-    test_producer.set_producer()
-    test_producer.set_topic_name('test0113')
-    test_producer._produce(records[0])
-    print(records[1]) #한번에 들어오는 레코드 개수 
+'''
     
+
+if __name__ == '__main__':
+    try:
+        max_result=50
+        querys = ['제주 Vlog','제주여행 브이로그','제주브이로그','제주도 브이로그','제주도 여행 브이로그','제주도 여행','제주 여행']
+        querys = ['제주여행 브이로그']
+        orders = ['rating','videoCount']
+        orders = ['rating']
+
+        # 원래의 경우 : 주기적으로 반복
+        # while True :
+        for query in querys:
+            for order in orders:
+                publishedAfter=None
+                publishedBefore=None
+                dataset = collect_data(query,order,publishedAfter,publishedBefore)
+                records = data_processing_(dataset)
+                print("데이터 개수: ",records[1]) #한번에 들어오는 레코드 개수
+
+                # 시간 측정 for partition -- 10
+                start=time.time()
+                producer = KafkaProducer_()
+                producer.set_producer()
+                producer.set_topic_name('youplace_part')
+                producer._produce(records[0])
+                print("걸린 시간: ",time.time()-start)
+
+                # 시간 측정 for partitoin 없음
+                start=time.time()
+                producer = KafkaProducer_()
+                producer.set_producer()
+                producer.set_topic_name('youplace')
+                producer._produce(records[0])
+                print("걸린 시간: ",time.time()-start)
+        
+    except Exception as e:  # General exceptions
+        print(e)
+    except KeyboardInterrupt:
+        print("Pressed CTRL+C...")

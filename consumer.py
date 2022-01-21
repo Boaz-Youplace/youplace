@@ -67,7 +67,6 @@ class KafkaConsumer_:
 
         # 파티션0 현재 offset num 저장
             p0_offset_before= self.consumer.committed(TopicPartition(self.topic_name,0))
-            print(p0_offset_before,1)
 
         # 시간 측정
         start=time.time()
@@ -82,7 +81,7 @@ class KafkaConsumer_:
             print(p0_offset_after,2)
 
             
-            if p0_offset_after - p0_offset_before > 10 :
+            if p0_offset_after - p0_offset_before > 50 :
                 with open('./json_files/test.json','w',encoding='utf-8') as f:
                     p0_offset_before=p0_offset_after
                     for tp, messages in msg_pack.items():
@@ -90,7 +89,6 @@ class KafkaConsumer_:
                             data=literal_eval(message.value)
                             print(data)
                             print(type(data)) # dict 형태 
-                            
                             json.dump(data,f,ensure_ascii=False)
                             f.write('\n')
                             
@@ -109,11 +107,10 @@ class KafkaConsumer_:
 
 
 if __name__ == '__main__':
-    #basic_(제주 명소) : 총 6개
-    basic_cg = KafkaConsumer_()
-    basic_cg.set_group_id('con0116_8')
-    basic_cg.set_topic_name('test0113')
-    basic_cg.set_consumer()
-    basic_cg._consume()
+    consumer = KafkaConsumer_()
+    consumer.set_group_id('youplace-consumer')
+    consumer.set_topic_name('youplace-part')
+    consumer.set_consumer()
+    consumer._consume()
 
     
