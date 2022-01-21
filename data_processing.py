@@ -1,4 +1,7 @@
 # 실제 실행시키는 파일 & 데이터 전처리
+# def data_processing_(data): collect_data(q,order)=data
+
+# 실제 실행시키는 파일 & 데이터 전처리
 
 from pprint import pprint
 from collecting_data import collect_data
@@ -8,13 +11,20 @@ import pandas as pd
 # q='Jeju vlog'
 # order='rating'
 
-# dataset = collect_data(q,order)
-# pprint(collect_data(q,order))
 def data_processing_(data):
+  #dataset 가지고 데이터 전처리 쭈욱 진행하면 될 것 같아융 (❁´◡`❁) !
+  # print('************************************************')
+  # data = collect_data(q,order)
+  # print(data)
+  # for i in rang?e(len(data['items'])):
+      # print(data['items'][i]['id'])
+      # print(data['items'][i]['snippet']['description'])
+
   id = []
   title = []
   description = []
   publishTime = []
+  channelTitle = []
   likeCount = []
   viewCount = []
 
@@ -23,12 +33,14 @@ def data_processing_(data):
     title.append(data['items'][i]['snippet']['localized']['title'])
     description.append(data['items'][i]['snippet']['localized']['description'])
     publishTime.append(data['items'][i]['snippet']['publishedAt'])
+    channelTitle.append(data['items'][i]['snippet']['channelTitle'])
     likeCount.append(data['items'][i]['statistics']['likeCount'])
     viewCount.append(data['items'][i]['statistics']['viewCount'])
     # print('id:', data['items'][i]['id'])
     # print('title:', data['items'][i]['snippet']['localized']['title'])
     # print('description:', data['items'][i]['snippet']['localized']['description'])
     # print('publishedAt:', data['items'][i]['snippet']['publishedAt'])
+    # print('channelTitle:', data['items'][i]['snippet']['channelTitle'])
     # print('likecount:', data['items'][i]['statistics']['likeCount'])
     # print('viewcount:', data['items'][i]['statistics']['viewCount'],'\n')
 
@@ -36,9 +48,10 @@ def data_processing_(data):
   df['title'] = title
   df['description']= description
   df['publishTime'] = publishTime
+  df['channelTitle'] = channelTitle
   df['likeCount'] = likeCount
   df['viewCount'] = viewCount
-  df_new = df.drop(['title','description'],axis=1)
+  df_new = df.drop(['description'],axis=1)
   first_info = df_new.to_dict('record')
   # print('정제되지 않은 첫 데이터','\n',first_info)
 
@@ -203,21 +216,21 @@ def data_processing_(data):
   for i in range (len(total_catergorize_list)):
     for j in range (len(total_catergorize_list[i])):
       # print('origin : ', total_catergorize_list[i][j][1]['address_name'])
-      #서귀포시 중부
-      if '서귀포시' in total_catergorize_list[i][j][1]['address_name'] :
-        address_list[num3] = '서귀포시(서귀포시 중부)'
       #서귀포시 서부
-      elif '대정읍' in total_catergorize_list[i][j][1]['address_name'] :
+      if '대정읍' in total_catergorize_list[i][j][1]['address_name'] :
         address_list[num3] = '안덕,대정(서귀포시 서부)'
       elif '안덕면' in total_catergorize_list[i][j][1]['address_name'] :
         address_list[num3] = '안덕,대정(서귀포시 서부)'
       #서귀포시 동부
-      elif '납원읍' in total_catergorize_list[i][j][1]['address_name'] :
+      elif '남원읍' in total_catergorize_list[i][j][1]['address_name'] :
         address_list[num3] = '남원,표선,성산(서귀포시 동부)'
       elif '표선면' in total_catergorize_list[i][j][1]['address_name'] :
         address_list[num3] = '남원,표선,성산(서귀포시 동부)'
       elif '성산읍' in total_catergorize_list[i][j][1]['address_name'] :
         address_list[num3] = '남원,표선,성산(서귀포시 동부)'
+      #서귀포시 중부
+      elif '서귀포시' in total_catergorize_list[i][j][1]['address_name'] :
+        address_list[num3] = '서귀포시(서귀포시 중부)'
       #제주시 동부
       elif '조천읍' in total_catergorize_list[i][j][1]['address_name'] :
         address_list[num3] = '조천,구좌,우도(제주시 동부)'
@@ -430,21 +443,21 @@ def data_processing_(data):
   for i in range (len(total_catergorize_list_des)):
     for j in range (len(total_catergorize_list_des[i])):
       # print('origin : ', total_catergorize_list_des[i][j][1]['address_name'])
-      #서귀포시 중부
-      if '서귀포시' in total_catergorize_list_des[i][j][1]['address_name'] :
-        address_list_des[num3_des] = '서귀포시(서귀포시 중부)'
       #서귀포시 서부
-      elif '대정읍' in total_catergorize_list_des[i][j][1]['address_name'] :
+      if '대정읍' in total_catergorize_list_des[i][j][1]['address_name'] :
         address_list_des[num3_des] = '안덕,대정(서귀포시 서부)'
       elif '안덕면' in total_catergorize_list_des[i][j][1]['address_name'] :
         address_list_des[num3_des] = '안덕,대정(서귀포시 서부)'
       #서귀포시 동부
-      elif '납원읍' in total_catergorize_list_des[i][j][1]['address_name'] :
+      elif '남원읍' in total_catergorize_list_des[i][j][1]['address_name'] :
         address_list_des[num3_des] = '남원,표선,성산(서귀포시 동부)'
       elif '표선면' in total_catergorize_list_des[i][j][1]['address_name'] :
         address_list_des[num3_des] = '남원,표선,성산(서귀포시 동부)'
       elif '성산읍' in total_catergorize_list_des[i][j][1]['address_name'] :
         address_list_des[num3_des] = '남원,표선,성산(서귀포시 동부)'
+      #서귀포시 중부
+      elif '서귀포시' in total_catergorize_list_des[i][j][1]['address_name'] :
+        address_list_des[num3_des] = '서귀포시(서귀포시 중부)'
       #제주시 동부
       elif '조천읍' in total_catergorize_list_des[i][j][1]['address_name'] :
         address_list_des[num3_des] = '조천,구좌,우도(제주시 동부)'
@@ -517,13 +530,8 @@ def data_processing_(data):
 
   # 중복 제거!!!
   x = list({i['place_name'][0]:i for i in real}.values())
-  print("최종 데이터!!!!!")
-  pprint(x)
-  return x,len(x)
+  # print("최종 데이터!!!!!")
+  # print(x)
 
   # print(len(x))
-
-# q='Jeju vlog'
-# order='rating'
-# dataset = collect_data(q,order)
-# records = data_processing_(dataset)
+  return x
