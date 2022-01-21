@@ -3,7 +3,7 @@ from pprint import pprint
 
         
 def collect_data(q,order,publishedAfter=None,publishedBefore=None):
-	CLIENT_SECRET_FILE = 'koeunseo-client-secret.json' # Oauth2 사용자 인증 정보 json파일 가져오기
+	CLIENT_SECRET_FILE = 'client-secret.json' # Oauth2 사용자 인증 정보 json파일 가져오기
 	API_NAME = 'youtube'
 	API_VERSION = 'v3'
 	SCOPES = ['https://www.googleapis.com/auth/youtube']
