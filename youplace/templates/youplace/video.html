@@ -5,9 +5,9 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
     <style>
-        .customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
+        .customoverlay {position:relative;bottom:40px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
         .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
-        .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+        .customoverlay div {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
         .customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
         .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
     </style>
@@ -67,17 +67,11 @@ for (var i = 0; i < positions.length; i ++) {
     bounds.extend(positions[i].latlng);
 }
 
-// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
-map.setBounds(bounds);
-
-
-
 for (var i = 0; i < positions.length; i ++) {
     // 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
     var content = '<div class="customoverlay">' +
-        '  <a href="https://map.kakao.com/link/map/11394059" target="_blank">' +
-        '    <span class="title">'+positions[i].place_name+'</span>' +
-        '  </a>' +
+        '  <div target="_blank">' +
+        ' <span class="title">'+positions[i].place_name+'</span></div>' +
         '</div>';
     // 커스텀 오버레이를 생성합니다
     var customOverlay = new kakao.maps.CustomOverlay({
@@ -86,6 +80,13 @@ for (var i = 0; i < positions.length; i ++) {
         content: content,
         yAnchor: 1 
     });
+
+}
+
+// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+map.setBounds(bounds);
+
+
 
 
 // // -------------------------
