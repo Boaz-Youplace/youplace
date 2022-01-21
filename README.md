@@ -11,9 +11,9 @@
 이러한 고민을 갖고 계신 분들을 위해, 유튜브 브이로거들이 찾아간 여행 명소들을 지도에서 한 눈에 파악할 수 있도록 만들었어요 💙
 
 ## 2. 기술 스택
-Cloud : AWS EC2, Docker
-Engineering : Kafka, Spark
-DB & Web : MYSQL(RDS), Django
++ Cloud : AWS EC2, Docker  
++ Engineering : Kafka, Spark  
++ DB & Web : MYSQL(RDS), Django  
 
 ## 3. 파이프라인 소개
 > 데이터 파이프라인  
