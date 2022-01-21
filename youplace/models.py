@@ -7,23 +7,6 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-class TbYouplace(models.Model):
-    id = models.CharField(primary_key=True, max_length=32)
-    place_name = models.CharField(max_length=50)
-    viewcount = models.IntegerField(db_column='viewCount', blank=True, null=True)  # Field name made lowercase.
-    publishtime = models.CharField(db_column='publishTime', max_length=50, blank=True, null=True)  # Field name made lowercase.
-    likecount = models.IntegerField(db_column='likeCount', blank=True, null=True)  # Field name made lowercase.
-    x = models.DecimalField(max_digits=24, decimal_places=18, blank=True, null=True)
-    y = models.DecimalField(max_digits=24, decimal_places=18, blank=True, null=True)
-    category = models.CharField(max_length=32, blank=True, null=True)
-    place_url = models.CharField(max_length=100, blank=True, null=True)
-    address_6 = models.CharField(max_length=32, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'tb_youplace'
-        unique_together = (('id', 'place_name'),)
-
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
@@ -135,3 +118,21 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
+class TbYouplace(models.Model):
+    id = models.CharField(primary_key=True, max_length=32)
+    place_name = models.CharField(max_length=50)
+    viewcount = models.IntegerField(db_column='viewCount', blank=True, null=True)  # Field name made lowercase.
+    publishtime = models.CharField(db_column='publishTime', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    likecount = models.IntegerField(db_column='likeCount', blank=True, null=True)  # Field name made lowercase.
+    x = models.DecimalField(max_digits=24, decimal_places=18, blank=True, null=True)
+    y = models.DecimalField(max_digits=24, decimal_places=18, blank=True, null=True)
+    title = models.CharField(max_length=100, blank=True, null=True)
+    channeltitle = models.CharField(db_column='channelTitle', max_length=50, blank=True, null=True)  # Field name made lowercase.
+    category = models.CharField(max_length=32, blank=True, null=True)
+    place_url = models.CharField(max_length=100, blank=True, null=True)
+    address_6 = models.CharField(max_length=32, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'tb_youplace'
+        unique_together = (('id', 'place_name'),)
