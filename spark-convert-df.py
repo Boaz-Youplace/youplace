@@ -38,7 +38,7 @@ df=df.withColumn('y', extract_element(df["y"]))
 df=df.withColumn('place_name', extract_element(df["place_name"]))
 
 # casting
-ㄴ
+
 # 1) string to int
 df = df.withColumn("likeCount", df["likeCount"].cast("int"))
 df = df.withColumn("viewCount", df["viewCount"].cast("int"))
