@@ -530,8 +530,21 @@ def data_processing_(data):
 
   # 중복 제거!!!
   x = list({i['place_name'][0]:i for i in real}.values())
-  # print("최종 데이터!!!!!")
-  # print(x)
+  print("최종 데이터!!!!!")
+  pprint(x)
 
-  # print(len(x))
+  print(len(x))
   return x
+
+  
+if __name__=='__main__':
+  q='Jeju vlog'
+  order='date'
+
+  max_result=5
+  publishedAfter=None
+  publishedBefore=None
+  publishedAfter = '2021-05-05T00:00:00Z'
+  publishedBefore = '2021-05-07T00:00:00Z'
+  dataset = collect_data(q,order,publishedAfter,publishedBefore)
+  records = data_processing_(dataset)

@@ -53,18 +53,14 @@ class KafkaProducer_:
             self.producer.flush()
         print("걸린시간 :",time.time()-start)
 
-def on_send_success(record_metadata): 
-    print(record_metadata.topic) 
-    print(record_metadata.partition) 
-    print(record_metadata.offset) 
-    
-def on_send_error(excp): 
-    print(excp)
+
     
 if __name__ == '__main__':
     # 1) 전처리 파일 실행 (인자 바꿔가며 수정) (입력값으로 바꿀지?)
-    q='Jeju vlog'
-    order='date'
+    querys = ['제주 Vlog','제주여행 브이로그','제주브이로그','제주도 브이로그','제주도 여행 브이로그','제주도 여행','제주 여행']
+    order = ['rating','date','videoCount']
+    # q='Jeju vlog'
+    # order='rating'
 
     '''
     date – 리소스를 만든 날짜를 기준으로 최근 항목부터 시간 순서대로 리소스를 정렬합니다.
@@ -78,8 +74,6 @@ if __name__ == '__main__':
     max_result=5
     publishedAfter=None
     publishedBefore=None
-    publishedAfter = '2021-05-05T00:00:00Z'
-    publishedBefore = '2021-05-07T00:00:00Z'
     dataset = collect_data(q,order,publishedAfter,publishedBefore)
     records = data_processing_(dataset)
     #2) producer객체 topic개수만큼 생성 - 아직 안함
