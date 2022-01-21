@@ -1,3 +1,4 @@
+#encoding : utf-8
 import json 
 import findspark
 
@@ -64,11 +65,14 @@ try:
         .option("password", "youplace") \
         .option("numPartitions",5) \
         .option("driver","com.mysql.cj.jdbc.Driver",) \
-        .option("createTableColumnTypes","address_6 VARCHAR(32) , category VARCHAR(32) , id VARCHAR(32) NOT NULL , likeCount INT , place_name VARCHAR(50) NOT NULL , place_url VARCHAR(100) , publishTime varchar(50) , viewCount INT , x DECIMAL(24,18) , x DECIMAL(24,18) , primary key(id,place_name) ") \
         .mode('append') \
         .save()
+        print('finish!')
+        # .option("createTableColumnTypes","address_6 VARCHAR(32) , category VARCHAR(32) , id VARCHAR(32) NOT NULL , likeCount INT , place_name VARCHAR(50) NOT NULL , place_url VARCHAR(100) , title VARCHAR(100), channelTitle VARVHAR(50), publishTime varchar(50) , viewCount INT , x DECIMAL(24,18) , x DECIMAL(24,18) , primary key(id,place_name) ") \
+        
 except Exception as e:
         # 대부분 중복 데이터(pk동일) 삽입에 대한 오류임 
+        print('fail')
         print(e)
 
 

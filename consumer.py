@@ -28,7 +28,7 @@ class KafkaConsumer_:
             self.topic_name,
             bootstrap_servers=[self.host],
             group_id=self.group_id,
-            auto_offset_reset='latest',
+            auto_offset_reset='earliest',
             enable_auto_commit=True, 
             value_deserializer=lambda x: x.decode('utf-8'),
             consumer_timeout_ms=100000,
@@ -56,7 +56,13 @@ class KafkaConsumer_:
         partitions=self.consumer.partitions_for_topic(self.topic_name)
         return partitions
     
-    
+    def ear_consumer(self):
+        print('[begin] get consumer list') 
+        for message in self.consumer: 
+            print("Topic: %s, Partition: %d, Offset: %d, Key: %s, Value: %s" \
+            % ( message.topic, message.partition, message.offset, message.key, message.value )) 
+        print('[end] get consumer list')
+
 
     def _consume(self):
         partitions = self.get_partitions()
@@ -66,8 +72,7 @@ class KafkaConsumer_:
             print ('offset '+str(p_id)+' before = '+str(self.consumer.committed(TopicPartition(self.topic_name, p_id))))
 
         # 파티션0 현재 offset num 저장
-            p0_offset_before= self.consumer.committed(TopicPartition(self.topic_name,0))
-
+        p0_offset_before= self.consumer.committed(TopicPartition(self.topic_name,0))
         # 시간 측정
         start=time.time()
 
@@ -81,36 +86,54 @@ class KafkaConsumer_:
             print(p0_offset_after,type(p0_offset_after))
 
             # 새로 들어온 데이터가 특정 개수 이상이면 json파일을 열어 데이터를 적재합니다.
-            if p0_offset_after - p0_offset_before > 10 :
-                with open('./json_files/test.json','w',encoding='utf-8') as f:
-                    p0_offset_before=p0_offset_after
-                    for tp, messages in msg_pack.items():
-                        for message in messages:
-                            data=literal_eval(message.value)
-                            print(data)
-                            print(type(data)) # dict 형태 
-                            json.dump(data,f,ensure_ascii=False)
-                            f.write('\n')
-                            
+            # if p0_offset_after - p0_offset_before > 10 :
+                # print(111111)
+            with open('./json_files/test.json','w',encoding='utf-8') as f:
+                p0_offset_before=p0_offset_after
                 for tp, messages in msg_pack.items():
                     for message in messages:
-                        pprint ("%s:%d:%d: keㄴy=%s value=%s" % (tp.topic, tp.partition,
-                                                            message.offset, message.key,
-                                                            message.value))
-                        # str ->json 변환 
-                        tmp = json.loads(message.value)
-                        js=json.loads(message.value)
-
+                        data=literal_eval(message.value)
+                        print(data)
+                        print(type(data)) # dict 형태 
+                        json.dump(data,f,ensure_ascii=False)
+                        f.write('\n')
+                            
             # 5초 주기로 new record 확인 
             time.sleep(5)
             
+# removing emoji
+def rmEmoji_ascii(inputString):
+    return inputString.encode('utf-8', 'ignore').decode('utf-8')
 
 
 if __name__ == '__main__':
-    consumer = KafkaConsumer_()
-    consumer.set_group_id('youplace-consumer')
-    consumer.set_topic_name('youplace-part')
-    consumer.set_consumer()
-    consumer._consume()
+    consumer = KafkaConsumer( 'youplace-part', bootstrap_servers=['localhost:9092'], auto_offset_reset='earliest', enable_auto_commit=True, group_id='my-group', value_deserializer=lambda x: x.decode('utf-8'), consumer_timeout_ms=1000 )
+    print('[begin] get consumer list') 
+    count=0
+    
+    import re
+
+    with open('./json_files/test.json','w',encoding='utf-8') as f:
+        for messages in consumer:
+            str_data=messages.value
+            data=eval(str_data)
+            # print(data)
+            # print(type(data))
+            data['title']=rmEmoji_ascii(data['title'])
+            # print(str(data))
+            # str_data=str(data)
+            # f.write(str_data)
+            json.dump(data,f)
+            f.write('\n')
+            count+=1
+    print(count)
+    f.close()
+
+    # consumer = KafkaConsumer_()
+    # consumer.set_group_id('youplace-consumer')
+    # consumer.set_topic_name('youplace-part')
+    # consumer.set_consumer()
+    # consumer.ear_consumer()
+    # consumer._consume()
 
     

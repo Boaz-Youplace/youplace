@@ -23,6 +23,8 @@ def main():
         likeCount int,
         x decimal(24,18),
         y decimal(24,18),
+        title varchar(100),
+        channelTitle varchar(50),
         category varchar(32),
         place_url varchar(100),
         address_6 varchar(32),
@@ -31,3 +33,6 @@ def main():
         ''' 
         #engine = InnoEB default charset=utf8
     cursor.execute(sql)
+    print(11)
+
+main()

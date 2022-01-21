@@ -47,7 +47,7 @@ class KafkaProducer_:
         start = time.time()
         print("[",self.topic_name,"]에 메시지 전송중....")
         for record in records:
-            print(record)
+            # pprint(record)
             self.producer.send(self.topic_name, record)
             # 보내는 방식이 총 3가지 https://data-engineer-tech.tistory.com/14?category=847456 (비동기 send)
             self.producer.flush()
@@ -75,10 +75,10 @@ if __name__ == '__main__':
     #     for order in orders:
     publishedAfter=None
     publishedBefore=None
-    dataset = collect_data('제주 브이로그','viewCount')
+    dataset = collect_data('제주 Vlog','viewCount')
     records = data_processing_(dataset)
         
-    print("데이터 개수: ",records[1]) #한번에 들어오는 레코드 개수
+    
 
 
     # 시간 측정 for partitoin 없음
@@ -87,6 +87,7 @@ if __name__ == '__main__':
     producer.set_producer()
     producer.set_topic_name('youplace-part')
     producer._produce(records[0])
+    print("데이터 개수: ",records[1]) #한번에 들어오는 레코드 개수
     print("파티션 10개일 때 걸린 시간: ",time.time()-start)
 
 
