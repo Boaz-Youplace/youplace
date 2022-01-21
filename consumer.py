@@ -80,7 +80,7 @@ class KafkaConsumer_:
             p0_offset_after = self.consumer.committed(TopicPartition(self.topic_name,0))
             print(p0_offset_after,2)
 
-            
+            # 새로 들어온 데이터가 50개 이상이면 json파일을 열어 데이터를 적재합니다.
             if p0_offset_after - p0_offset_before > 50 :
                 with open('./json_files/test.json','w',encoding='utf-8') as f:
                     p0_offset_before=p0_offset_after
