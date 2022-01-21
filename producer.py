@@ -67,9 +67,7 @@ class KafkaProducer_:
 
 if __name__ == '__main__':
     querys = ['제주 Vlog','제주여행 브이로그','제주브이로그','제주도 브이로그','제주도 여행 브이로그','제주도 여행','제주 여행']
-    querys = ['제주 Vlog']
-    orders = ['date']
-    # orders = None
+    orders = ['viewCount','rating']
 
     # 주기적으로 반복
     # while True :
@@ -77,7 +75,7 @@ if __name__ == '__main__':
     #     for order in orders:
     publishedAfter=None
     publishedBefore=None
-    dataset = collect_data('제주 브이로그','date')
+    dataset = collect_data('제주 브이로그','viewCount')
     records = data_processing_(dataset)
         
     print("데이터 개수: ",records[1]) #한번에 들어오는 레코드 개수

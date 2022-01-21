@@ -5,18 +5,8 @@ from collecting_data import collect_data
 
 import pandas as pd
 
-q='Jeju vlog'
-order='title'
-#viewCount,rating
-dataset = collect_data(q,order)
-# pprint(collect_data(q,order))
 
 def data_processing_(data):
-  data = collect_data(q,order)
-
-  # for i in rang?e(len(data['items'])):
-      # print(data['items'][i]['id'])
-      # print(data['items'][i]['snippet']['description'])
 
   id = []
   title = []
