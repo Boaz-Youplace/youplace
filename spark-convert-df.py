@@ -52,31 +52,33 @@ df = df.withColumn("publishTime", df["publishTime"].cast("timestamp"))
 
 df.printSchema()
 
-df.show(5)
+# df.show(5)
 
+df.groupby(['id', 'place_name']) \
+    .count() \
+    .where('count > 1') \
+    .sort('count', ascending=False) \
+    .show()
+
+print(df.count())
 
 # Saving data to a JDBC source
-try:
-        df.write \
-        .format("jdbc") \
-        .option("url", "jdbc:mysql://boaz-youplace.cai20ccufxe1.ap-northeast-2.rds.amazonaws.com:3306/?useSSL=false") \
-        .option("dbtable", "db_youplace.tb_youplace") \
-        .option("user", "admin") \
-        .option("password", "youplace") \
-        .option("numPartitions",5) \
-        .option("driver","com.mysql.cj.jdbc.Driver",) \
-        .mode('append') \
-        .save()
-        print('finish!')
-        # .option("createTableColumnTypes","address_6 VARCHAR(32) , category VARCHAR(32) , id VARCHAR(32) NOT NULL , likeCount INT , place_name VARCHAR(50) NOT NULL , place_url VARCHAR(100) , title VARCHAR(100), channelTitle VARVHAR(50), publishTime varchar(50) , viewCount INT , x DECIMAL(24,18) , x DECIMAL(24,18) , primary key(id,place_name) ") \
+# try:
+#         df.write \
+#         .format("jdbc") \
+#         .option("url", "jdbc:mysql://boaz-youplace.cai20ccufxe1.ap-northeast-2.rds.amazonaws.com:3306/?useSSL=false") \
+#         .option("dbtable", "db_youplace.tb_youplace") \
+#         .option("user", "admin") \
+#         .option("password", "youplace") \
+#         .option("numPartitions",5) \
+#         .option("driver","com.mysql.cj.jdbc.Driver",) \
+#         .mode('append') \
+#         .save()
+#         print('finish!')
+#         # .option("createTableColumnTypes","address_6 VARCHAR(32) , category VARCHAR(32) , id VARCHAR(32) NOT NULL , likeCount INT , place_name VARCHAR(50) NOT NULL , place_url VARCHAR(100) , title VARCHAR(100), channelTitle VARVHAR(50), publishTime varchar(50) , viewCount INT , x DECIMAL(24,18) , x DECIMAL(24,18) , primary key(id,place_name) ") \
         
-except Exception as e:
-        # 대부분 중복 데이터(pk동일) 삽입에 대한 오류임 
-        print('fail')
-        print(e)
+# except Exception as e:
+#         # 대부분 중복 데이터(pk동일) 삽입에 대한 오류임 
+#         print('fail')
+#         print(e)
 
-
-
-# # 스파크 데이터프레임에 SQL을 적용시킬 수 있는 객체(feat. 통계처리) 별도 생성
-
-# # 1) 
