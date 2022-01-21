@@ -1,21 +1,19 @@
 # 실제 실행시키는 파일 & 데이터 전처리
-# def data_processing_(data): collect_data(q,order)=data
-
-# 실제 실행시키는 파일 & 데이터 전처리
 
 from pprint import pprint
 from collecting_data import collect_data
 
 import pandas as pd
 
-# q='Jeju vlog'
-# order='rating'
+q='Jeju vlog'
+order='title'
+#viewCount,rating
+dataset = collect_data(q,order)
+# pprint(collect_data(q,order))
 
 def data_processing_(data):
-  #dataset 가지고 데이터 전처리 쭈욱 진행하면 될 것 같아융 (❁´◡`❁) !
-  # print('************************************************')
-  # data = collect_data(q,order)
-  # print(data)
+  data = collect_data(q,order)
+
   # for i in rang?e(len(data['items'])):
       # print(data['items'][i]['id'])
       # print(data['items'][i]['snippet']['description'])
@@ -534,17 +532,4 @@ def data_processing_(data):
   pprint(x)
 
   print(len(x))
-  return x
-
-  
-if __name__=='__main__':
-  q='Jeju vlog'
-  order='date'
-
-  max_result=5
-  publishedAfter=None
-  publishedBefore=None
-  publishedAfter = '2021-05-05T00:00:00Z'
-  publishedBefore = '2021-05-07T00:00:00Z'
-  dataset = collect_data(q,order,publishedAfter,publishedBefore)
-  records = data_processing_(dataset)
+  return x, len(x)

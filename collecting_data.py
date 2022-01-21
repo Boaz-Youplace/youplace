@@ -9,7 +9,7 @@ def collect_data(q,order,publishedAfter=None,publishedBefore=None):
 	SCOPES = ['https://www.googleapis.com/auth/youtube']
 	service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES) 
 
-	max_result = 5 #임의 설정
+	max_result = 10 #임의 설정
 	search_response = service.search().list(
 		part = 'snippet',
 		q = q,

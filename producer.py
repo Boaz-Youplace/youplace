@@ -45,12 +45,13 @@ class KafkaProducer_:
         # 시간 측정
         print("메시지 전송 시작")
         start = time.time()
+        print("[",self.topic_name,"]에 메시지 전송중....")
         for record in records:
-            print("[",self.topic_name,"]에 메시지 전송중....")
             print(record)
             self.producer.send(self.topic_name, record)
             # 보내는 방식이 총 3가지 https://data-engineer-tech.tistory.com/14?category=847456 (비동기 send)
             self.producer.flush()
+        print("전송완료")
         print("걸린시간 :",time.time()-start)
 
 '''
@@ -65,40 +66,38 @@ class KafkaProducer_:
     
 
 if __name__ == '__main__':
-    try:
-        max_result=50
-        querys = ['제주 Vlog','제주여행 브이로그','제주브이로그','제주도 브이로그','제주도 여행 브이로그','제주도 여행','제주 여행']
-        querys = ['제주여행 브이로그']
-        orders = ['rating','videoCount']
-        orders = ['rating']
+    querys = ['제주 Vlog','제주여행 브이로그','제주브이로그','제주도 브이로그','제주도 여행 브이로그','제주도 여행','제주 여행']
+    querys = ['제주 Vlog']
+    orders = ['date']
+    # orders = None
 
-        # 원래의 경우 : 주기적으로 반복
-        # while True :
-        for query in querys:
-            for order in orders:
-                publishedAfter=None
-                publishedBefore=None
-                dataset = collect_data(query,order,publishedAfter,publishedBefore)
-                records = data_processing_(dataset)
-                print("데이터 개수: ",records[1]) #한번에 들어오는 레코드 개수
-
-                # 시간 측정 for partition -- 10
-                start=time.time()
-                producer = KafkaProducer_()
-                producer.set_producer()
-                producer.set_topic_name('youplace_part')
-                producer._produce(records[0])
-                print("걸린 시간: ",time.time()-start)
-
-                # 시간 측정 for partitoin 없음
-                start=time.time()
-                producer = KafkaProducer_()
-                producer.set_producer()
-                producer.set_topic_name('youplace')
-                producer._produce(records[0])
-                print("걸린 시간: ",time.time()-start)
+    # 주기적으로 반복
+    # while True :
+    # for query in querys:
+    #     for order in orders:
+    publishedAfter=None
+    publishedBefore=None
+    dataset = collect_data('제주 브이로그','date')
+    records = data_processing_(dataset)
         
-    except Exception as e:  # General exceptions
-        print(e)
-    except KeyboardInterrupt:
-        print("Pressed CTRL+C...")
+    print("데이터 개수: ",records[1]) #한번에 들어오는 레코드 개수
+
+
+    # 시간 측정 for partitoin 없음
+    start=time.time()
+    producer = KafkaProducer_()
+    producer.set_producer()
+    producer.set_topic_name('youplace-part')
+    producer._produce(records[0])
+    print("파티션 10개일 때 걸린 시간: ",time.time()-start)
+
+
+    # # 시간 측정 for partition -- 1
+    # start=time.time()
+    # producer_exp = KafkaProducer_()
+    # producer_exp.set_producer()
+    # producer_exp.set_topic_name('youplace')
+    # producer._produce(records[0])
+    # print("파티션 1개일 때 걸린 시간: ",time.time()-start)
+        
+   

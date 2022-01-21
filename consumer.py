@@ -60,10 +60,10 @@ class KafkaConsumer_:
 
     def _consume(self):
         partitions = self.get_partitions()
-
+        print(partitions)
         # 파티션 별 last offset 읽기
         for p_id in partitions:
-            print ('offset %d before = %d' %(p_id,self.consumer.committed(TopicPartition(self.topic_name, p_id))))
+            print ('offset '+str(p_id)+' before = '+str(self.consumer.committed(TopicPartition(self.topic_name, p_id))))
 
         # 파티션0 현재 offset num 저장
             p0_offset_before= self.consumer.committed(TopicPartition(self.topic_name,0))
@@ -78,7 +78,7 @@ class KafkaConsumer_:
             self.consumer.commit()  
             # 파티션0 현재 offset num 저장
             p0_offset_after = self.consumer.committed(TopicPartition(self.topic_name,0))
-            print(p0_offset_after,2)
+            print(p0_offset_after,type(p0_offset_after))
 
             # 새로 들어온 데이터가 50개 이상이면 json파일을 열어 데이터를 적재합니다.
             if p0_offset_after - p0_offset_before > 50 :
@@ -92,14 +92,14 @@ class KafkaConsumer_:
                             json.dump(data,f,ensure_ascii=False)
                             f.write('\n')
                             
-                # for tp, messages in msg_pack.items():
-                #     for message in messages:
-                #         # pprint ("%s:%d:%d: key=%s value=%s" % (tp.topic, tp.partition,
-                #         #                                     message.offset, message.key,
-                #         #                                     message.value))
-                #         # # str ->json 변환 
-                #         # tmp = json.loads(message.value)
-                #         js=json.loads(message.value)
+                for tp, messages in msg_pack.items():
+                    for message in messages:
+                        pprint ("%s:%d:%d: keㄴy=%s value=%s" % (tp.topic, tp.partition,
+                                                            message.offset, message.key,
+                                                            message.value))
+                        # str ->json 변환 
+                        tmp = json.loads(message.value)
+                        js=json.loads(message.value)
 
             # 5초 주기로 new record 확인 
             time.sleep(5)
