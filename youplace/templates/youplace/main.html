@@ -26,6 +26,47 @@
           font-size: 3.5rem;
         }
       }
+
+      .hello {
+        background-color:#d95050;
+        color:white;
+      }
+
+      .hello:hover {
+        background-color: white;
+        color:#d95050;
+      }
+
+      .fw-bolder {
+        color:#d95050;
+      }
+
+      .hi {
+        color:white;
+      }
+
+      .kes {
+        column-count:2;
+        column-gap :32px;
+      }
+
+      .color-red {
+        color : gray;
+      }
+      
+      .card-text {
+        color : gray;
+      }
+
+      .py-lg-5 {
+        padding-bottom: 1rem !important;
+        padding-top: 1rem !important;
+      }
+
+      .py-5 {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+      }
     </style>
 
     
@@ -33,10 +74,10 @@
   <body>
     
 <header>
-  <div class="navbar navbar-dark bg-dark shadow-sm">
+  <div class="navbar navbar-red bg-danger shadow-sm">
     <div class="container">
       <a href="#" class="navbar-brand d-flex align-items-center">
-        <strong>Youplace</strong>
+        <small class='hi'>Boaz 제 15회 온라인 컨퍼런스 | Web Demo </small>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -50,9 +91,9 @@
   <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">Youplace</h1>
-        <br><br>
-        <div>이젠 검색도 유튜브 시대 🎈</div>
+        <h1 class="fw-bolder">Youplace</h1>
+        <h4 class='color-red'>카프카와 스파크를 활용한 유튜브 제주 명소 검색</h4>
+        <!-- <div>이젠 검색도 유튜브 시대 🎈</div>
         <div>제주여행🌴을 계획할 때 브이로그 영상을 많이 참고하실텐데요 😊 </div>
         <div>수많은 영상들과 영상 속 분산된 명소들을 하나 하나 찾으려 생각하면</div>
         <div>너무 막막하지 않으셨나요? 😥😫</div>
@@ -60,7 +101,7 @@
         <div>이러한 고민을 갖고 계신 분들을 위해,</div>
         <div>유튜브 브이로거들이 찾아간 여행 명소들을</div>
         <div>지도에서 한 눈에 파악할 수 있도록 만들었어요 </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
@@ -76,98 +117,102 @@
             <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="static/images/애월.png" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"/></img>
 
             <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <h4>애월,한림,한경(제주시 서부)</h4>
+              <p class="card-text">여기에 뭔가 각자의 구역의 의미를 나타낼수있는 몽글몽글한 말을 쓰면 좋을것 같은데 뭘써야할지는 아직 모르겠다는.. 멘트 추천 받아요우 ㅎ</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary hello">재생 목록</button>
                 </div>
-                <small class="text-muted">9 mins</small>
               </div>
             </div>
           </div>
         </div>
         <div class="col">
           <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+            
+            <!-- <img class="bd-placeholder-img card-img-top" src="./image/애월.png" width="100%" height="225":> -->
+            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="static/images/제주 시내.png" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"/></img>
 
             <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <h4>제주 시내(제주시 중부)</h4>
+              <p class="card-text">여기에 뭔가 각자의 구역의 의미를 나타낼수있는 몽글몽글한 말을 쓰면 좋을것 같은데 뭘써야할지는 아직 모르겠다는.. 멘트 추천 받아요우 ㅎ</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary hello">재생 목록</button>
                 </div>
-                <small class="text-muted">9 mins</small>
               </div>
             </div>
           </div>
         </div>
         <div class="col">
           <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+            
+            <!-- <img class="bd-placeholder-img card-img-top" src="./image/애월.png" width="100%" height="225":> -->
+            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="static/images/제주시 동부.png" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"/></img>
 
             <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <h4>조천,구좌,우도(제주시 동부)</h4>
+              <p class="card-text">여기에 뭔가 각자의 구역의 의미를 나타낼수있는 몽글몽글한 말을 쓰면 좋을것 같은데 뭘써야할지는 아직 모르겠다는.. 멘트 추천 받아요우 ㅎ</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary hello">재생 목록</button>
                 </div>
-                <small class="text-muted">9 mins</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-            <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                </div>
-                <small class="text-muted">9 mins</small>
               </div>
             </div>
           </div>
         </div>
         <div class="col">
           <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+            
+            <!-- <img class="bd-placeholder-img card-img-top" src="./image/애월.png" width="100%" height="225":> -->
+            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="static/images/서귀포(동부).png" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"/></img>
 
             <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <h4>남원,표선,성산</h4>
+              <p class="card-text">여기에 뭔가 각자의 구역의 의미를 나타낼수있는 몽글몽글한 말을 쓰면 좋을것 같은데 뭘써야할지는 아직 모르겠다는.. 멘트 추천 받아요우 ㅎ</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary hello">재생 목록</button>
                 </div>
-                <small class="text-muted">9 mins</small>
               </div>
             </div>
           </div>
         </div>
         <div class="col">
           <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+            
+            <!-- <img class="bd-placeholder-img card-img-top" src="./image/애월.png" width="100%" height="225":> -->
+            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="static/images/서귀포(서부).png" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"/></img>
 
             <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <h4>안덕,대정(서귀포시 서부)</h4>
+              <p class="card-text">여기에 뭔가 각자의 구역의 의미를 나타낼수있는 몽글몽글한 말을 쓰면 좋을것 같은데 뭘써야할지는 아직 모르겠다는.. 멘트 추천 받아요우 ㅎ</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary hello">재생 목록</button>
                 </div>
-                <small class="text-muted">9 mins</small>
               </div>
             </div>
           </div>
         </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            
+            <!-- <img class="bd-placeholder-img card-img-top" src="./image/애월.png" width="100%" height="225":> -->
+            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="static/images/서귀포(중부).png" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"/></img>
+
+            <div class="card-body">
+              <h4>서귀포시(서귀포시 중부)</h4>
+              <p class="card-text">여기에 뭔가 각자의 구역의 의미를 나타낼수있는 몽글몽글한 말을 쓰면 좋을것 같은데 뭘써야할지는 아직 모르겠다는.. 멘트 추천 받아요우 ㅎ</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary hello">재생목록</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
 
       </div>
     </div>

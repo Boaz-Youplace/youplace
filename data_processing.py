@@ -523,3 +523,6 @@ def data_processing_(data):
 
   print(len(x))
   return x, len(x)
+
+dataset = collect_data('제주 Vlog','viewCount')
+records = data_processing_(dataset)

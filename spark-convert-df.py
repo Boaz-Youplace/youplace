@@ -29,6 +29,8 @@ path = './json_files/test.json'
 # 데이터프레임 생성
 df = spark.read.json(path)   
 
+# 형태변환 작업 정 print스키마
+df.printSchema()
 # 배열 내 요소 추출 함수 (udf 사용)
 extract_element = udf(lambda x: x[0])
 
@@ -52,16 +54,15 @@ df = df.withColumn("publishTime", df["publishTime"].cast("timestamp"))
 
 df.printSchema()
 
-# df.show(5)
+df.show(5)
 
 # 중복 확인 함수 - 존재하면 jdbc write 과정 중 오류 남  !! (중요)
-df.groupby(['id', 'place_name']) \
+df=df.groupby(['id', 'place_name']) \
     .count() \
     .where('count > 1') \
     .sort('count', ascending=False) \
     .show()
 
-print(df.count())
 
 # Saving data to a JDBC source
 try:
@@ -75,8 +76,6 @@ try:
         .option("driver","com.mysql.cj.jdbc.Driver",) \
         .mode('append') \
         .save()
-        print('finish!')
-        # .option("createTableColumnTypes","address_6 VARCHAR(32) , category VARCHAR(32) , id VARCHAR(32) NOT NULL , likeCount INT , place_name VARCHAR(50) NOT NULL , place_url VARCHAR(100) , title VARCHAR(100), channelTitle VARVHAR(50), publishTime varchar(50) , viewCount INT , x DECIMAL(24,18) , x DECIMAL(24,18) , primary key(id,place_name) ") \
         
 except Exception as e:
         # 대부분 중복 데이터(pk동일) 삽입에 대한 오류임 
