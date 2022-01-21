@@ -5,13 +5,12 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
     <style>
+
         .customoverlay {position:relative;bottom:40px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
         .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
         .customoverlay div {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
         .customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
         .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
-        .customoverlay .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
-        .info .close:hover {cursor: pointer;}
     
     </style>
 
@@ -78,12 +77,6 @@ for (var i = 0; i < positions.length; i ++) {
         '<div class="close" onclick="closeOverlay()" title="닫기"></div'+
         '</div>' +
         '</div>';
-
-        // <div class="title">' + 
-        //     '            카카오 스페이스닷원' + 
-        //     '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-        //     '        </div>' + 
-    // 커스텀 오버레이를 생성합니다
     var customOverlay = new kakao.maps.CustomOverlay({
         map: map,
         position: positions[i].latlng,
@@ -97,15 +90,6 @@ for (var i = 0; i < positions.length; i ++) {
 map.setBounds(bounds);
 
 
-// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-kakao.maps.event.addListener(marker, 'click', function() {
-    overlay.setMap(map);
-});
-
-// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
-function closeOverlay() {
-    overlay.setMap(null);     
-}
 
 
 // // -------------------------

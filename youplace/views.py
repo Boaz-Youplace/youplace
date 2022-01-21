@@ -16,6 +16,8 @@ from django.http import JsonResponse
 
 # Create your views here.
  
+def bs(request):
+    return render(request,'youplace/bs.html')
 def main(request):
     videos = TbYouplace.objects.filter(address_6='애월,한림,한경(제주시 서부)').order_by('-viewcount')[:5]
     videoJson =serializers.serialize('json',videos)
