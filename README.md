@@ -26,13 +26,10 @@ Youtube API를 통해 영상 데이터를 불러오고 전처리 진행 & 전처
 + client-secret.json : GCP에서 발급한 Oauth2 사용자 인증 정보 json파일
 + collecting_data.py : Youtube API를 통해 영상 데이터 추출
 + consumer.py
-+ consumer_multi_processing.py
 + data_processing.py : Youtube API를 통해 불러온 영상 데이터로 전처리 진행 & 전처리에서 얻은 데이터로 Kakao API를 사용하여 장소 검색 => 각 영상에 나오는 장소 데이터들 추출
 + google_apis.py : Youtube API의 search:list와 video:list API 연결코드
 + manage.py : Django 프로젝트 시작
-+ original_consumer.py
 + producer.py
-+ python_mySQL.py : python으로 MySQL연결하는 코드 (사전에 사용자 생성 후 권한 부여해줘야함)
 + rds_create_table.py : AWS RDS의 DB에 연결 후 테이블 생성하는 코드
 + rds_insert_data.py : AWS RDS DB의 테이블에 데이터 삽입하는 코드
 + requirements.txt
