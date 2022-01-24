@@ -53,6 +53,6 @@ BOAZ DATA ENGINEERING 16TH
 
 ## 6. 추가 정보
 * notion: https://prickle-ragdoll-392.notion.site/BOAZ-ONLINE-CONFERENCE-2022-c4803bfc11db4bc58e2ad0f1903163fb
-* youtube:
+* youtube: https://www.youtube.com/watch?v=hHTqEfhHZIs (5:01:00 ~ 5:25:30)  
 * web: 추후 배포 예정
 
